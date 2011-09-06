@@ -24,7 +24,7 @@ namespace NHibernate.Test.NHSpecificTest.NH1444
 						.SetParameter("filterval", filter.HasValue ? filter.Value : 0).List<xchild>();
 					var message = ls.GetWholeLog();
 				    string paramPrefix = ((DriverBase) Sfi.ConnectionProvider.Driver).NamedPrefix;
-					Assert.That(message, Is.StringContaining("xchild0_.ParentId=xparent1_.Id and (" + paramPrefix + "p0=" + Dialect.ToBooleanValueString(true) + " or xparent1_.A<" + paramPrefix + "p1)"));
+					Assert.That(message, Is.StringContaining("xchild0_.ParentId=xparent1_.Id and ('True' /* " + paramPrefix + "p0 [Type: Boolean (0)] */=" + Dialect.ToBooleanValueString(true) + " or xparent1_.A<0 /* " + paramPrefix + "p1 [Type: Int64 (0)] */)"));
 				}
 			}
 		}
