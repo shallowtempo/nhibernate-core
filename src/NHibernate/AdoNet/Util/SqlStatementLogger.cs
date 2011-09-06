@@ -1,7 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Text;
-
+using System.Text.RegularExpressions;
 
 namespace NHibernate.AdoNet.Util
 {
@@ -9,6 +10,8 @@ namespace NHibernate.AdoNet.Util
 	public class SqlStatementLogger
 	{
 		private static readonly IInternalLogger log = LoggerProvider.LoggerFor("NHibernate.SQL");
+
+		private readonly Regex regex = new Regex(@"(?<P>@p\d+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
 		/// <summary> Constructs a new SqlStatementLogger instance.</summary>
 		public SqlStatementLogger() : this(false, false) { }
@@ -84,15 +87,17 @@ namespace NHibernate.AdoNet.Util
 				var output = new StringBuilder(command.CommandText.Length + (count * 20));
 				string commandText = command.CommandText.TrimEnd(' ', ';', '\n');
 
-				for (int i = 0; i < count; i++)
-				{
-					p = (IDataParameter)command.Parameters[i];
-					var substitutedParameter = string.Format(
-						"{0} /* {1} [Type: {2}] */", this.GetParameterLogableValue(p), p.ParameterName, GetParameterLogableType(p));
-					commandText = commandText.Replace(p.ParameterName, substitutedParameter);
-				}
+				var newCommandText = this.regex.Replace(commandText, m =>
+					{
+						p = (IDataParameter)command.Parameters[m.Groups["P"].Value];
+						return string.Format(
+							"{0} /* {1} [Type: {2}] */",
+							this.GetParameterLogableValue(p),
+							p.ParameterName,
+							GetParameterLogableType(p));
+					});
 
-				output.Append(commandText);
+				output.Append(newCommandText);
 				output.Append(";");
 
 				outputText = output.ToString();
@@ -146,13 +151,16 @@ namespace NHibernate.AdoNet.Util
 			return sb.ToString();
 		}
 
+		private static readonly HashSet<DbType> stringTypes = new HashSet<DbType> 
+		{ 
+			DbType.String, DbType.AnsiString, DbType.AnsiStringFixedLength, DbType.StringFixedLength,
+			DbType.Time, DbType.Date, DbType.DateTime, DbType.DateTime2, DbType.DateTimeOffset,
+			DbType.Guid, DbType.Xml, DbType.Boolean
+		};
+
 		private static bool IsStringType(DbType dbType)
 		{
-			return DbType.String.Equals(dbType) || DbType.AnsiString.Equals(dbType)
-						 || DbType.AnsiStringFixedLength.Equals(dbType) || DbType.StringFixedLength.Equals(dbType)
-						 || DbType.Time.Equals(dbType) || DbType.Date.Equals(dbType) || DbType.DateTime.Equals(dbType)
-						 || DbType.DateTime2.Equals(dbType) || DbType.DateTimeOffset.Equals(dbType) 
-						 || DbType.Guid.Equals(dbType) || DbType.Xml.Equals(dbType);
+			return stringTypes.Contains(dbType);
 		}
 
 		public FormatStyle DetermineActualStyle(FormatStyle style)

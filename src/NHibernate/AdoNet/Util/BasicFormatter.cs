@@ -112,6 +112,10 @@ namespace NHibernate.AdoNet.Util
 					{
 						ExtractStringEnclosedBy("\"");
 					}
+					else if ("[".Equals(token))
+					{
+						ExtractStringEnclosedBy("]");
+					}
 
 					if(IsMultiQueryDelimiter(token))
 					{
@@ -316,6 +320,10 @@ namespace NHibernate.AdoNet.Util
 					{
 						indent--;
 						afterOn = false;
+					}
+					if (afterInsert)
+					{
+						afterInsert = false;
 					}
 					Newline();
 				}
