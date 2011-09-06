@@ -78,36 +78,36 @@ namespace NHibernate.AdoNet.Util
 			}
 			else
 			{
-				var output = new StringBuilder(command.CommandText.Length + (command.Parameters.Count * 20));
-				output.Append(command.CommandText.TrimEnd(' ', ';', '\n'));
-				output.Append(";");
-
 				IDataParameter p;
 				int count = command.Parameters.Count;
-				bool appendComma = false;
+
+				var output = new StringBuilder(command.CommandText.Length + (count * 20));
+				string commandText = command.CommandText.TrimEnd(' ', ';', '\n');
+
 				for (int i = 0; i < count; i++)
 				{
-					if (appendComma)
-					{
-						output.Append(", ");
-					}
-					appendComma = true;
 					p = (IDataParameter)command.Parameters[i];
-					output.Append(string.Format("{0} = {1} [Type: {2}]", p.ParameterName, GetParameterLogableValue(p), GetParameterLogableType(p)));
+					var substitutedParameter = string.Format(
+						"{0} /* {1} [Type: {2}] */", this.GetParameterLogableValue(p), p.ParameterName, GetParameterLogableType(p));
+					commandText = commandText.Replace(p.ParameterName, substitutedParameter);
 				}
+
+				output.Append(commandText);
+				output.Append(";");
+
 				outputText = output.ToString();
 			}
 			return outputText;
 		}
 
-	    private static string GetParameterLogableType(IDataParameter dataParameter)
-	    {
-            var p = dataParameter as IDbDataParameter;
-            if (p != null)
-                return p.DbType + " (" + p.Size + ")";
-	        return p.DbType.ToString();
+		private static string GetParameterLogableType(IDataParameter dataParameter)
+		{
+			var p = dataParameter as IDbDataParameter;
+			if (p != null)
+				return p.DbType + " (" + p.Size + ")";
+			return p.DbType.ToString();
 
-	    }
+		}
 
 			public string GetParameterLogableValue(IDataParameter parameter)
 			{
@@ -149,7 +149,10 @@ namespace NHibernate.AdoNet.Util
 		private static bool IsStringType(DbType dbType)
 		{
 			return DbType.String.Equals(dbType) || DbType.AnsiString.Equals(dbType)
-						 || DbType.AnsiStringFixedLength.Equals(dbType) || DbType.StringFixedLength.Equals(dbType);
+						 || DbType.AnsiStringFixedLength.Equals(dbType) || DbType.StringFixedLength.Equals(dbType)
+						 || DbType.Time.Equals(dbType) || DbType.Date.Equals(dbType) || DbType.DateTime.Equals(dbType)
+						 || DbType.DateTime2.Equals(dbType) || DbType.DateTimeOffset.Equals(dbType) 
+						 || DbType.Guid.Equals(dbType) || DbType.Xml.Equals(dbType);
 		}
 
 		public FormatStyle DetermineActualStyle(FormatStyle style)
