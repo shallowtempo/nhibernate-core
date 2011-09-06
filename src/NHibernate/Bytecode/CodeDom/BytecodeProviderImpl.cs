@@ -57,7 +57,7 @@ namespace NHibernate.Bytecode.CodeDom
 			private const string closeSetMethod = "}\n";
 
 			private const string header =
-				"using System;\n" + "using NHibernate.Property;\n" + "namespace NHibernate.Bytecode.CodeDom {\n";
+				"using System;\n" + "using NHibernate.Properties;\n" + "namespace NHibernate.Bytecode.CodeDom {\n";
 
 			private const string startGetMethod =
 				"public object[] GetPropertyValues(object obj) {{\n" + "  {0} t = ({0})obj;\n"
@@ -66,10 +66,18 @@ namespace NHibernate.Bytecode.CodeDom
 			private const string startSetMethod =
 				"public void SetPropertyValues(object obj, object[] values) {{\n" + "  {0} t = ({0})obj;\n";
 
+			private const string basicValueSetterStatement = "  t.{0} = values[{2}] == null ? new {1}() : ({1})values[{2}];\n";
+
+			private const string basicClassSetterStatement = "  t.{0} = ({1})values[{2}];\n";
+
+			private const string setterStatement = "  setters[{1}].Set(obj, values[{1}]);\n";
+
 			private readonly CompilerParameters cp = new CompilerParameters();
 			private readonly IGetter[] getters;
 			private readonly System.Type mappedClass;
 			private readonly ISetter[] setters;
+
+			private CodeDomProvider provider;
 
 			/// <summary>
 			/// ctor
@@ -96,6 +104,14 @@ namespace NHibernate.Bytecode.CodeDom
 					log.Info("Disabling reflection optimizer for class " + mappedClass.FullName);
 					log.Debug("CodeDOM compilation failed", e);
 					return null;
+				}
+				finally
+				{
+					if (provider != null)
+					{
+						provider.Dispose();
+						provider = null;
+					}
 				}
 			}
 
@@ -125,6 +141,8 @@ namespace NHibernate.Bytecode.CodeDom
 					Assembly referencedAssembly = Assembly.Load(referencedName);
 					AddAssembly(referencedAssembly.Location);
 				}
+
+				this.provider = new CSharpCodeProvider();
 			}
 
 			/// <summary>
@@ -156,8 +174,7 @@ namespace NHibernate.Bytecode.CodeDom
 			/// <returns>An instance of the generated class</returns>
 			private IReflectionOptimizer Build(string code)
 			{
-				CodeDomProvider provider = new CSharpCodeProvider();
-				CompilerResults res = provider.CompileAssemblyFromSource(cp, new[] {code});
+				CompilerResults res = this.provider.CompileAssemblyFromSource(cp, new[] {code});
 
 				if (res.Errors.HasErrors)
 				{
@@ -181,7 +198,7 @@ namespace NHibernate.Bytecode.CodeDom
 				var optimizer =
 					(IReflectionOptimizer)
 					assembly.CreateInstance(types[0].FullName, false, BindingFlags.CreateInstance, null,
-					                        new object[] {setters, getters}, null, null);
+											new object[] {setters, getters}, null, null);
 
 				return optimizer;
 			}
@@ -220,19 +237,20 @@ namespace NHibernate.Bytecode.CodeDom
 					{
 						System.Type type = getters[i].ReturnType;
 
+						var typeName = GenerateTypeName(type);
+
 						if (type.IsValueType)
 						{
-							sb.AppendFormat("  t.{0} = values[{2}] == null ? new {1}() : ({1})values[{2}];\n", setter.PropertyName,
-							                type.FullName.Replace('+', '.'), i);
+							sb.AppendFormat(basicValueSetterStatement, setter.PropertyName, typeName, i);
 						}
 						else
 						{
-							sb.AppendFormat("  t.{0} = ({1})values[{2}];\n", setter.PropertyName, type.FullName.Replace('+', '.'), i);
+							sb.AppendFormat(basicClassSetterStatement, setter.PropertyName, typeName, i);
 						}
 					}
 					else
 					{
-						sb.AppendFormat("  setters[{0}].Set(obj, values[{0}]);\n", i);
+						sb.AppendFormat(setterStatement, setter.PropertyName, i);
 					}
 				}
 				sb.Append(closeSetMethod); // Close Set
@@ -256,6 +274,19 @@ namespace NHibernate.Bytecode.CodeDom
 				sb.Append("}\n"); // Close namespace
 
 				return sb.ToString();
+			}
+
+			private string GenerateTypeName(System.Type type)
+			{
+				string typeName;
+				using (var typeWriter = new System.IO.StringWriter())
+				{
+					var typeRef = new System.CodeDom.CodeTypeReference(type);
+					var typeExpression = new System.CodeDom.CodeTypeReferenceExpression(typeRef);
+					provider.GenerateCodeFromExpression(typeExpression, typeWriter, new CodeGeneratorOptions());
+					typeName = typeWriter.ToString();
+				}
+				return typeName;
 			}
 		}
 
