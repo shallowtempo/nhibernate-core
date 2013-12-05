@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Data;
+using System.Data.Common;
 using System.Linq;
 using NHibernate.Connection;
 
@@ -12,13 +13,13 @@ namespace NHibernate.Test
 	/// </summary>
 	public class DebugConnectionProvider : DriverConnectionProvider
 	{
-		private ConcurrentDictionary<IDbConnection, byte> connections = new ConcurrentDictionary<IDbConnection, byte>();
+		private ConcurrentDictionary<DbConnection, byte> connections = new ConcurrentDictionary<DbConnection, byte>();
 
-		public override IDbConnection GetConnection()
+		public override DbConnection GetConnection()
 		{
 			try
 			{
-				IDbConnection connection = base.GetConnection();
+				DbConnection connection = base.GetConnection();
 				connections.TryAdd(connection, 0);
 				return connection;
 			}
@@ -28,7 +29,7 @@ namespace NHibernate.Test
 			}
 		}
 
-		public override void CloseConnection(IDbConnection conn)
+		public override void CloseConnection(DbConnection conn)
 		{
 			base.CloseConnection(conn);
 			byte _;
