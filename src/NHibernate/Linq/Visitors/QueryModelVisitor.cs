@@ -20,7 +20,7 @@ using Remotion.Linq.EagerFetching;
 
 namespace NHibernate.Linq.Visitors
 {
-	public class QueryModelVisitor : QueryModelVisitorBase
+	public class QueryModelVisitor : NhQueryModelVisitorBase, INhQueryModelVisitor
 	{
 		public static ExpressionToHqlTranslationResults GenerateHqlQuery(QueryModel queryModel, VisitorParameters parameters, bool root,
 			NhLinqExpressionReturnType? rootReturnType)
@@ -329,7 +329,7 @@ namespace NHibernate.Linq.Visitors
 			base.VisitAdditionalFromClause(fromClause, queryModel, index);
 		}
 
-		public void VisitNhJoinClause(string querySourceName, NhJoinClause joinClause, int index)
+		private void VisitNhJoinClause(string querySourceName, NhJoinClause joinClause)
 		{
 			var expression = HqlGeneratorExpressionTreeVisitor.Visit(joinClause.FromExpression, VisitorParameters).AsExpression();
 			var alias = _hqlTree.TreeBuilder.Alias(querySourceName);
@@ -435,6 +435,33 @@ namespace NHibernate.Linq.Visitors
 		public override void VisitGroupJoinClause(GroupJoinClause groupJoinClause, QueryModel queryModel, int index)
 		{
 			throw new NotImplementedException();
+		}
+
+		public override void VisitNhHavingClause(NhHavingClause havingClause, QueryModel queryModel, int index)
+		{
+			var visitor = new SimplifyConditionalVisitor();
+			havingClause.Predicate = visitor.Visit(havingClause.Predicate);
+
+			// Visit the predicate to build the query
+			var expression = HqlGeneratorExpressionTreeVisitor.Visit(havingClause.Predicate, VisitorParameters).AsBooleanExpression();
+			_hqlTree.AddHavingClause(expression);
+		}
+
+		public override void VisitNhWithClause(NhWithClause withClause, QueryModel queryModel, int index)
+		{
+			var visitor = new SimplifyConditionalVisitor();
+			withClause.Predicate = visitor.Visit(withClause.Predicate);
+
+			// Visit the predicate to build the query
+			var expression = HqlGeneratorExpressionTreeVisitor.Visit(withClause.Predicate, VisitorParameters).AsBooleanExpression();
+			_hqlTree.AddWhereClause(expression);
+		}
+
+		public override void VisitNhJoinClause(NhJoinClause joinClause, QueryModel queryModel, int index)
+		{
+			var querySourceName = VisitorParameters.QuerySourceNamer.GetName(joinClause);
+
+			VisitNhJoinClause(querySourceName, joinClause);
 		}
 	}
 }
