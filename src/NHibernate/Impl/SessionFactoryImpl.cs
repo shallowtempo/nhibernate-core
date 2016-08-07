@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -101,8 +102,8 @@ namespace NHibernate.Impl
 		private static readonly IIdentifierGenerator UuidGenerator = new UUIDHexGenerator();
 
 		[NonSerialized]
-		private readonly ThreadSafeDictionary<string, ICache> allCacheRegions =
-			new ThreadSafeDictionary<string, ICache>(new Dictionary<string, ICache>());
+		private readonly ConcurrentDictionary<string, ICache> allCacheRegions =
+			new ConcurrentDictionary<string, ICache>();
 
 		[NonSerialized]
 		private readonly IDictionary<string, IClassMetadata> classMetadata;
@@ -155,7 +156,7 @@ namespace NHibernate.Impl
 		private readonly IQueryCache queryCache;
 
 		[NonSerialized]
-		private readonly IDictionary<string, IQueryCache> queryCaches;
+		private readonly ConcurrentDictionary<string, IQueryCache> queryCaches;
 		[NonSerialized]
 		private readonly SchemaExport schemaExport;
 		[NonSerialized]
@@ -168,7 +169,7 @@ namespace NHibernate.Impl
 		[NonSerialized]
 		private readonly UpdateTimestampsCache updateTimestampsCache;
 		[NonSerialized]
-		private readonly IDictionary<string, string[]> entityNameImplementorsMap = new ThreadSafeDictionary<string, string[]>(new Dictionary<string, string[]>(100));
+		private readonly IDictionary<string, string[]> entityNameImplementorsMap = new ConcurrentDictionary<string, string[]>(4 * System.Environment.ProcessorCount, 100);
 		private readonly string uuid;
 		private bool disposed;
 
@@ -255,7 +256,7 @@ namespace NHibernate.Impl
 					if (cache != null)
 					{
 						caches.Add(cacheRegion, cache);
-						allCacheRegions.Add(cache.RegionName, cache.Cache);
+						((IDictionary<string, ICache>)allCacheRegions).Add(cache.RegionName, cache.Cache);
 					}
 				}
 				IEntityPersister cp = PersisterFactory.CreateClassPersister(model, cache, this, mapping);
@@ -383,7 +384,7 @@ namespace NHibernate.Impl
 			{
 				updateTimestampsCache = new UpdateTimestampsCache(settings, properties);
 				queryCache = settings.QueryCacheFactory.GetQueryCache(null, updateTimestampsCache, settings, properties);
-				queryCaches = new ThreadSafeDictionary<string, IQueryCache>(new Dictionary<string, IQueryCache>());
+				queryCaches = new ConcurrentDictionary<string, IQueryCache>();
 			}
 			else
 			{
@@ -975,10 +976,7 @@ namespace NHibernate.Impl
 
 		public IDictionary<string, ICache> GetAllSecondLevelCacheRegions()
 		{
-			lock (allCacheRegions.SyncRoot)
-			{
-				return new Dictionary<string, ICache>(allCacheRegions);
-			}
+			return allCacheRegions.ToDictionary(kv => kv.Key, kv => kv.Value);
 		}
 
 		public ICache GetSecondLevelCacheRegion(string regionName)
@@ -1010,18 +1008,14 @@ namespace NHibernate.Impl
 				return null;
 			}
 
-			lock (allCacheRegions.SyncRoot)
-			{
-				IQueryCache currentQueryCache;
-				if (!queryCaches.TryGetValue(cacheRegion, out currentQueryCache))
+			return queryCaches.GetOrAdd(
+				cacheRegion,
+				cr =>
 				{
-					currentQueryCache =
-						settings.QueryCacheFactory.GetQueryCache(cacheRegion, updateTimestampsCache, settings, properties);
-					queryCaches[cacheRegion] = currentQueryCache;
+					IQueryCache currentQueryCache = settings.QueryCacheFactory.GetQueryCache(cacheRegion, updateTimestampsCache, settings, properties);
 					allCacheRegions[currentQueryCache.RegionName] = currentQueryCache.Cache;
-				}
-				return currentQueryCache;
-			}
+					return currentQueryCache;
+				});
 		}
 
 		public void EvictQueries()
