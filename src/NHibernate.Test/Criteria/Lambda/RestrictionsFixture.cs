@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-
+using System.Collections.Generic;
 using NUnit.Framework;
 
 using NHibernate.Criterion;
@@ -43,7 +43,7 @@ namespace NHibernate.Test.Criteria.Lambda
 					.Add(Restrictions.Not(Restrictions.Between("personAlias.Age", 10, 20)))
 					.Add(!Restrictions.In("Name", new string[] { "name4" }))
 					.Add(Restrictions.In("Name", new string[] { "name1", "name2", "name3" }))
-					.Add(Restrictions.In("Name", new ArrayList() { "name1", "name2", "name3" }))
+					.Add(Restrictions.In("Name", new List<object>() { "name1", "name2", "name3" }))
 					.Add(Restrictions.InG<int>("Age", new int[] { 1, 2, 3 }))
 					.Add(Restrictions.InsensitiveLike("Name", "test"))
 					.Add(Restrictions.InsensitiveLike("Name", "tEsT", MatchMode.Anywhere))
@@ -67,7 +67,7 @@ namespace NHibernate.Test.Criteria.Lambda
 					.And(Restrictions.On(() => personAlias.Age).Not.IsBetween(10).And(20))
 					.And(!Restrictions.On<Person>(p => p.Name).IsIn(new string[] { "name4" }))
 					.And(Restrictions.On<Person>(p => p.Name).IsIn(new string[] { "name1", "name2", "name3" }))
-					.And(Restrictions.On<Person>(p => p.Name).IsIn(new ArrayList() { "name1", "name2", "name3" }))
+					.And(Restrictions.On<Person>(p => p.Name).IsIn(new List<object>() { "name1", "name2", "name3" }))
 					.And(Restrictions.On<Person>(p => p.Age).IsInG<int>(new int[] { 1, 2, 3 }))
 					.And(Restrictions.On<Person>(p => p.Name).IsInsensitiveLike("test"))
 					.And(Restrictions.On<Person>(p => p.Name).IsInsensitiveLike("tEsT", MatchMode.Anywhere))
@@ -120,7 +120,7 @@ namespace NHibernate.Test.Criteria.Lambda
 					.Add(Restrictions.Between("personAlias.Age", 18, 65))
 					.Add(Restrictions.Not(Restrictions.Between("Age", 18, 65)))
 					.Add(Restrictions.In("Name", new string[] { "name1", "name2", "name3" }))
-					.Add(Restrictions.In("personAlias.Name", new ArrayList() { "name1", "name2", "name3" }))
+					.Add(Restrictions.In("personAlias.Name", new List<object>() { "name1", "name2", "name3" }))
 					.Add(Restrictions.InG<int>("Age", new int[] { 1, 2, 3 }))
 					.Add(Restrictions.InsensitiveLike("Name", "test"))
 					.Add(Restrictions.InsensitiveLike("Name", "tEsT", MatchMode.Anywhere))
@@ -140,7 +140,7 @@ namespace NHibernate.Test.Criteria.Lambda
 					.WhereRestrictionOn(() => personAlias.Age).IsBetween(18).And(65)
 					.WhereRestrictionOn(p => p.Age).Not.IsBetween(18).And(65)
 					.AndRestrictionOn(p => p.Name).IsIn(new string[] { "name1", "name2", "name3" })
-					.AndRestrictionOn(() => personAlias.Name).IsIn(new ArrayList() { "name1", "name2", "name3" })
+					.AndRestrictionOn(() => personAlias.Name).IsIn(new List<object>() { "name1", "name2", "name3" })
 					.AndRestrictionOn(p => p.Age).IsInG<int>(new int[] { 1, 2, 3 })
 					.AndRestrictionOn(p => p.Name).IsInsensitiveLike("test")
 					.AndRestrictionOn(p => p.Name).IsInsensitiveLike("tEsT", MatchMode.Anywhere)
@@ -164,7 +164,7 @@ namespace NHibernate.Test.Criteria.Lambda
 					.Add(Restrictions.Between("Age", 18, 65))
 					.Add(Restrictions.Between("personAlias.Age", 18, 65))
 					.Add(Restrictions.In("Name", new string[] { "name1", "name2", "name3" }))
-					.Add(Restrictions.In("personAlias.Name", new ArrayList() { "name1", "name2", "name3" }));
+					.Add(Restrictions.In("personAlias.Name", new List<object>() { "name1", "name2", "name3" }));
 
 			Person personAlias = null;
 			QueryOver<Person> actual =
@@ -172,7 +172,7 @@ namespace NHibernate.Test.Criteria.Lambda
 					.WhereRestrictionOn(p => p.Age).IsBetween(18).And(65)
 					.WhereRestrictionOn(() => personAlias.Age).IsBetween(18).And(65)
 					.AndRestrictionOn(p => p.Name).IsIn(new string[] { "name1", "name2", "name3" })
-					.AndRestrictionOn(() => personAlias.Name).IsIn(new ArrayList() { "name1", "name2", "name3" });
+					.AndRestrictionOn(() => personAlias.Name).IsIn(new List<object>() { "name1", "name2", "name3" });
 
 			AssertCriteriaAreEqual(expected, actual);
 		}
@@ -238,7 +238,7 @@ namespace NHibernate.Test.Criteria.Lambda
 					.Add(Restrictions.InsensitiveLike("Name", "%test%"))
 					.Add(Restrictions.InsensitiveLike("Name", "test", MatchMode.Anywhere))
 					.Add(Restrictions.In("Name", new string[] { "name1", "name2" }))
-					.Add(Restrictions.In("Name", new ArrayList() { "name3", "name4" }))
+					.Add(Restrictions.In("Name", new List<object>() { "name3", "name4" }))
 					.Add(Restrictions.Between("Age", 10, 20));
 
 			IQueryOver<Person> actual =
@@ -249,7 +249,7 @@ namespace NHibernate.Test.Criteria.Lambda
 					.And(p => p.Name.IsInsensitiveLike("%test%"))
 					.And(p => p.Name.IsInsensitiveLike("test", MatchMode.Anywhere))
 					.And(p => p.Name.IsIn(new string[] { "name1", "name2" }))
-					.And(p => p.Name.IsIn(new ArrayList() { "name3", "name4" }))
+					.And(p => p.Name.IsIn(new List<object>() { "name3", "name4" }))
 					.And(p => p.Age.IsBetween(10).And(20));
 
 			AssertCriteriaAreEqual(expected, actual);

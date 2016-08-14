@@ -29,12 +29,12 @@ namespace NHibernate.Test.UtilityTest
 			_shm = new SequencedHashMap();
 			_emptyShm = new SequencedHashMap();
 
-			_expectedKeys = new ArrayList();
+			_expectedKeys = new List<object>();
 			_expectedKeys.Add("test1");
 			_expectedKeys.Add("test2");
 			_expectedKeys.Add("test3");
 
-			_expectedValues = new ArrayList();
+			_expectedValues = new List<object>();
 			_expectedValues.Add(1);
 			_expectedValues.Add("2");
 			_expectedValues.Add(true);

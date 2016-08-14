@@ -2,6 +2,7 @@ using log4net;
 using NUnit.Framework;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 
 namespace NHibernate.Test.Join
@@ -58,7 +59,7 @@ namespace NHibernate.Test.Join
 			s = null;
 		}
 
-		private IList objectsNeedDeleting = new ArrayList();
+		private IList objectsNeedDeleting = new List<object>();
 
 		[Test]
 		public void SimpleSaveAndRetrieve()

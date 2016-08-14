@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using NHibernate.Engine;
 using NUnit.Framework;
 
@@ -10,11 +11,11 @@ namespace NHibernate.Test.EngineTest
 		[Test]
 		public void EqualsCollection()
 		{
-			ArrayList value1 = new ArrayList();
+			List<object> value1 = new List<object>();
 			value1.Add(10);
 			value1.Add(20);
 
-			ArrayList value2 = (ArrayList) value1.Clone();
+			List<object> value2 = (List<object>) new List<object>(value1);
 
 			TypedValue t1 = new TypedValue(NHibernateUtil.Int32, value1, EntityMode.Poco);
 			TypedValue t2 = new TypedValue(NHibernateUtil.Int32, value2, EntityMode.Poco);

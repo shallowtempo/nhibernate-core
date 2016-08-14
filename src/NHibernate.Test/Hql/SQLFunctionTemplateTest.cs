@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using NHibernate.Dialect.Function;
 using NUnit.Framework;
@@ -14,7 +15,7 @@ namespace NHibernate.Test.Hql
 		{
 			SQLFunctionTemplate ft = new SQLFunctionTemplate(NHibernateUtil.String, "ltrim( ?1 )");
 			Assert.IsTrue(ft.HasArguments);
-			IList args = new ArrayList();
+			IList args = new List<object>();
 			args.Add("'abcd   <'");
 			Assert.AreEqual("ltrim( 'abcd   <' )", ft.Render(args, factoryImpl).ToString());
 
@@ -35,7 +36,7 @@ namespace NHibernate.Test.Hql
 		public void RepetedParams()
 		{
 			SQLFunctionTemplate ft;
-			IList args = new ArrayList();
+			IList args = new List<object>();
 
 			ft =
 				new SQLFunctionTemplate(NHibernateUtil.String,
@@ -58,7 +59,7 @@ namespace NHibernate.Test.Hql
 		public void NoStringArguments()
 		{
 			SQLFunctionTemplate ft;
-			IList args = new ArrayList();
+			IList args = new List<object>();
 
 			ft = new SQLFunctionTemplate(NHibernateUtil.String, "?1 ?2 ?3");
 			args.Add(DateTime.Today);
@@ -75,7 +76,7 @@ namespace NHibernate.Test.Hql
 		public void ArgsDiffParams()
 		{
 			SQLFunctionTemplate ft;
-			IList args = new ArrayList();
+			IList args = new List<object>();
 
 			// No Args; 2 params
 			ft = new SQLFunctionTemplate(NHibernateUtil.String, "func(?1,?2)");

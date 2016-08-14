@@ -157,7 +157,7 @@ namespace NHibernate.Collection.Generic
 		public override IEnumerable GetDeletes(ICollectionPersister persister, bool indexIsFormula)
 		{
 			var snap = (ISet<SnapshotElement>)GetSnapshot();
-			ArrayList deletes = new ArrayList(snap.Select(x => x.Id).ToArray());
+			List<object> deletes = new List<object>(snap.Select(x => x.Id).ToArray());
 			for (int i = 0; i < _values.Count; i++)
 			{
 				if (_values[i] != null)

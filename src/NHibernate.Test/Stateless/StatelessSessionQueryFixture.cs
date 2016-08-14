@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using NHibernate.Cfg;
 using NUnit.Framework;
 
@@ -25,7 +26,7 @@ namespace NHibernate.Test.Stateless
 
 		private class TestData
 		{
-			internal readonly IList list = new ArrayList();
+			internal readonly IList list = new List<object>();
 
 			private readonly ISessionFactory sessions;
 

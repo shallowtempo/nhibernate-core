@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using NHibernate.Dialect.Function;
 using NHibernate.SqlTypes;
 using NUnit.Framework;
@@ -13,7 +14,7 @@ namespace NHibernate.Test.Hql
 		[Test]
 		public void NoArgFunction()
 		{
-			IList args = new ArrayList();
+			IList args = new List<object>();
 			NoArgSQLFunction nf = new NoArgSQLFunction("noArgs", NHibernateUtil.String);
 			Assert.IsTrue(nf.HasParenthesesIfNoArguments);
 			Assert.AreEqual("noArgs()", nf.Render(args, factoryImpl).ToString());
@@ -37,7 +38,7 @@ namespace NHibernate.Test.Hql
 		[Test]
 		public void StandardFunction()
 		{
-			IList args = new ArrayList();
+			IList args = new List<object>();
 
 			StandardSQLFunction sf = new StandardSQLFunction("fname");
 			Assert.AreEqual("fname()", sf.Render(args, factoryImpl).ToString());
@@ -50,7 +51,7 @@ namespace NHibernate.Test.Hql
 		[Test]
 		public void CastFunc()
 		{
-			IList args = new ArrayList();
+			IList args = new List<object>();
 
 			CastFunction cf = new CastFunction();
 			try
@@ -86,7 +87,7 @@ namespace NHibernate.Test.Hql
 		[Test]
 		public void VarArgsFunction()
 		{
-			IList args = new ArrayList();
+			IList args = new List<object>();
 
 			VarArgsSQLFunction vf = new VarArgsSQLFunction("(", " || ", ")");
 			Assert.AreEqual("()", vf.Render(args, factoryImpl).ToString());
@@ -104,7 +105,7 @@ namespace NHibernate.Test.Hql
 		[Test]
 		public void Nvl()
 		{
-			IList args = new ArrayList();
+			IList args = new List<object>();
 
 			NvlFunction nf = new NvlFunction();
 			args.Add("va1");
@@ -120,7 +121,7 @@ namespace NHibernate.Test.Hql
 		[Test]
 		public void PositionSubstring()
 		{
-			IList args = new ArrayList();
+			IList args = new List<object>();
 
 			PositionSubstringFunction psf = new PositionSubstringFunction();
 			args.Add("'a'");
@@ -142,7 +143,7 @@ namespace NHibernate.Test.Hql
 			//<set function type> <leftparen> [ <setquantifier> ] <value expression> <right paren>
 			//<set function type> : := AVG | MAX | MIN | SUM | COUNT
 			//<setquantifier> ::= DISTINCT | ALL
-			IList args = new ArrayList();
+			IList args = new List<object>();
 
 			ClassicSumFunction csf = new ClassicSumFunction();
 			args.Add("va1");
@@ -172,7 +173,7 @@ namespace NHibernate.Test.Hql
 		{
 			//ANSI-SQL92 definition
 			//COUNT < leftparen> <asterisk> < right paren>
-			IList args = new ArrayList();
+			IList args = new List<object>();
 
 			ClassicCountFunction ccf = new ClassicCountFunction();
 			args.Add("va1");
@@ -204,7 +205,7 @@ namespace NHibernate.Test.Hql
 			//<set function type> <leftparen> [ <setquantifier> ] <value expression> <right paren>
 			//<set function type> : := AVG | MAX | MIN | SUM | COUNT
 			//<setquantifier> ::= DISTINCT | ALL
-			IList args = new ArrayList();
+			IList args = new List<object>();
 
 			ClassicAvgFunction caf = new ClassicAvgFunction();
 			args.Add("va1");
@@ -232,7 +233,7 @@ namespace NHibernate.Test.Hql
 		[Test]
 		public void ClassicAggregate()
 		{
-			IList args = new ArrayList();
+			IList args = new List<object>();
 
 			ClassicAggregateFunction caf = new ClassicAggregateFunction("max", false);
 			args.Add("va1");
@@ -276,7 +277,7 @@ namespace NHibernate.Test.Hql
 			// <character substring function> ::=
 			// SUBSTRING <left paren> <character value expression> FROM < start position>
 			// [ FOR <string length> ] <right paren>
-			IList args = new ArrayList();
+			IList args = new List<object>();
 
 			AnsiSubstringFunction asf = new AnsiSubstringFunction();
 			args.Add("var1");
