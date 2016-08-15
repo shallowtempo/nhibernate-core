@@ -28,7 +28,7 @@ namespace NHibernate.Test.NHSpecificTest.NH2297
 
 			const string MappingsAssembly = "NHibernate.Test";
 
-			Assembly assembly = Assembly.Load(MappingsAssembly);
+			Assembly assembly = Assembly.Load(new AssemblyName(MappingsAssembly));
 
 			string ns = GetType().Namespace;
 			string bugNumber = ns.Substring(ns.LastIndexOf('.') + 1);
