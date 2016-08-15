@@ -1,9 +1,12 @@
 using System;
 using System.Data;
-using System.Runtime.Serialization;
-using System.Security;
 
 using NHibernate.Engine;
+
+#if FEATURE_SERIALIZATION
+using System.Runtime.Serialization;
+using System.Security;
+#endif
 
 namespace NHibernate.AdoNet
 {
@@ -15,7 +18,10 @@ namespace NHibernate.AdoNet
 	/// combined.
 	/// </remarks>
 	[Serializable]
-	public class ConnectionManager : ISerializable, IDeserializationCallback
+	public class ConnectionManager
+#if FEATURE_SERIALIZATION
+		: ISerializable, IDeserializationCallback
+#endif
 	{
 		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(ConnectionManager));
 
@@ -270,6 +276,7 @@ namespace NHibernate.AdoNet
 			AfterStatement();
 		}
 
+#if FEATURE_SERIALIZATION
 		#region Serialization
 
 		private ConnectionManager(SerializationInfo info, StreamingContext context)
@@ -300,6 +307,7 @@ namespace NHibernate.AdoNet
 		}
 
 		#endregion
+#endif
 
 		public ITransaction BeginTransaction(IsolationLevel isolationLevel)
 		{

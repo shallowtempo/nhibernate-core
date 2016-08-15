@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq.Expressions;
-using System.Runtime.Serialization;
-using System.Security;
 using NHibernate.AdoNet;
 using NHibernate.Collection;
 using NHibernate.Criterion;
@@ -23,6 +21,11 @@ using NHibernate.Stat;
 using NHibernate.Type;
 using NHibernate.Util;
 
+#if FEATURE_SERIALIZATION
+using System.Runtime.Serialization;
+using System.Security;
+#endif
+
 namespace NHibernate.Impl
 {
 	/// <summary>
@@ -35,7 +38,11 @@ namespace NHibernate.Impl
 	/// hard stuff is... This class is NOT THREADSAFE.
 	/// </remarks>
 	[Serializable]
-	public sealed class SessionImpl : AbstractSessionImpl, IEventSource, ISerializable, IDeserializationCallback
+	public sealed class SessionImpl 
+		: AbstractSessionImpl, IEventSource
+#if FEATURE_SERIALIZATION
+		, ISerializable, IDeserializationCallback
+#endif
 	{
 		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(SessionImpl));
 
@@ -89,6 +96,7 @@ namespace NHibernate.Impl
 		[NonSerialized]
 		private readonly ConnectionReleaseMode connectionReleaseMode;
 
+#if FEATURE_SERIALIZATION
 		#region System.Runtime.Serialization.ISerializable Members
 
 		/// <summary>
@@ -186,6 +194,7 @@ namespace NHibernate.Impl
 		}
 
 		#endregion
+#endif
 
 		/// <summary>
 		/// Constructor used for OpenSession(...) processing, as well as construction

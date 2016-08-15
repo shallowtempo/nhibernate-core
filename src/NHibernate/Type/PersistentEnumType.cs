@@ -6,7 +6,6 @@ using NHibernate.SqlTypes;
 
 namespace NHibernate.Type
 {
-	using System.Runtime.Serialization;
 
 	/// <summary>
 	/// PersistentEnumType
@@ -14,7 +13,7 @@ namespace NHibernate.Type
 	[Serializable]
 	public class PersistentEnumType : AbstractEnumType
 	{
-		#region Converters
+#region Converters
 
 		// OLD TODO: ORACLE - An convert is needed because right now everything that Oracle is 
 		// sending to NHibernate is a decimal - not the correct underlying type and I don't know why
@@ -146,7 +145,7 @@ namespace NHibernate.Type
 			}
 		}
 
-		#endregion
+#endregion
 
 		static PersistentEnumType()
 		{
