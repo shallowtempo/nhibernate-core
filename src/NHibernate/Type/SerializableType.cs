@@ -1,3 +1,5 @@
+#if FEATURE_SERIALIZATION
+
 using System;
 using System.Data;
 using System.IO;
@@ -163,3 +165,5 @@ namespace NHibernate.Type
 		}
 	}
 }
+
+#endif

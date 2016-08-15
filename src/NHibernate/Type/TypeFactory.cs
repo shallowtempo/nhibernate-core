@@ -211,9 +211,11 @@ namespace NHibernate.Type
 
 			RegisterType(typeof(XDocument), NHibernateUtil.XDoc, new[] { "xdoc", "xdocument" });
 
+#if FEATURE_SERIALIZATION
 			// object needs to have both class and serializable setup before it can
 			// be created.
 			RegisterType(typeof (Object), NHibernateUtil.Object, new[] {"object"});
+#endif
 		}
 
 		/// <summary>
@@ -251,10 +253,13 @@ namespace NHibernate.Type
 				(p, s) => GetType(NHibernateUtil.Currency, p, s, st => new CurrencyType(st)));
 			
 			RegisterType(NHibernateUtil.DateTime2, new[] { "datetime2" });
+
+#if FEATURE_SERIALIZATION
 			RegisterType(NHibernateUtil.Serializable, new[] {"Serializable", "serializable"},
 						 l =>
 						 GetType(NHibernateUtil.Serializable, l,
 								 len => new SerializableType(typeof (object), SqlTypeFactory.GetBinary(len))));
+#endif
 		}
 
 		public ICollectionTypeFactory CollectionTypeFactory
@@ -526,6 +531,7 @@ namespace NHibernate.Type
 			if (!typeClass.IsSerializable)
 				return null;
 
+#if FEATURE_SERIALIZATION
 			if (typeClassification == TypeClassification.Length)
 				return GetSerializableType(typeClass, Int32.Parse(parsedTypeName[1]));
 			
@@ -533,6 +539,9 @@ namespace NHibernate.Type
 				return GetSerializableType(typeClass, length.Value);
 
 			return GetSerializableType(typeClass);
+#else
+			throw new NotImplementedException("Serializable types not valid with .NET Core");
+#endif
 		}
 
 
@@ -608,6 +617,7 @@ namespace NHibernate.Type
 			return (NullableType)returnType;
 		}
 
+#if FEATURE_SERIALIZATION
 		/// <summary>
 		/// Gets the SerializableType for the specified Type
 		/// </summary>
@@ -671,6 +681,7 @@ namespace NHibernate.Type
 
 			return (NullableType)returnType;
 		}
+#endif
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		public static NullableType GetStringType(int length)

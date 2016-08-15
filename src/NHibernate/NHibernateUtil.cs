@@ -258,6 +258,7 @@ namespace NHibernate
 		/// <seealso cref="AnyType"/>
 		public static readonly ClassMetaType ClassMetaType = new ClassMetaType();
 
+#if FEATURE_SERIALIZATION
 		/// <summary>
 		/// NHibernate serializable type
 		/// </summary>
@@ -267,6 +268,7 @@ namespace NHibernate
 		/// NHibernate System.Object type
 		/// </summary>
 		public static readonly AnyType Object = new AnyType();
+#endif
 
 
 		//		/// <summary>
@@ -297,6 +299,7 @@ namespace NHibernate
 			return new PersistentEnumType(enumClass);
 		}
 
+#if FEATURE_SERIALIZATION
 		/// <summary>
 		/// A NHibernate serializable type
 		/// </summary>
@@ -317,6 +320,7 @@ namespace NHibernate
 		{
 			return new AnyType(metaType, identifierType);
 		}
+#endif
 
 		/// <summary>
 		/// A NHibernate persistent object (entity) type
