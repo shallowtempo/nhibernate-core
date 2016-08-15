@@ -12,6 +12,8 @@ namespace NHibernate.SqlTypes
 	[Serializable]
 	public static class SqlTypeFactory
 	{
+		private static readonly object StaticSyncRoot = new object();
+
 		// key = typeof(sqlType).Name : ie - BinarySqlType(l), BooleanSqlType, DecimalSqlType(p,s)
 		// value = SqlType
 		private static readonly IDictionary<string, SqlType> SqlTypes = 
@@ -96,10 +98,12 @@ namespace NHibernate.SqlTypes
 			return GetTypeWithLen<StringClobSqlType>(length, l => new StringClobSqlType(l));
 		}
 
-		[MethodImpl(MethodImplOptions.Synchronized)]
 		public static SqlType GetSqlType(DbType dbType, byte precision, byte scale)
 		{
-			return GetTypeWithPrecision(dbType, precision, scale);
+			lock (StaticSyncRoot)
+			{
+				return GetTypeWithPrecision(dbType, precision, scale);
+			}
 		}
 
 		private static string GetKeyForLengthBased(string name, int length)
