@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Cache;
@@ -14,7 +13,7 @@ namespace NHibernate.Test.NHSpecificTest.NH3564
 {
 	public class MyDummyCache : ICache
 	{
-		private IDictionary hashtable = new Hashtable();
+		private IDictionary<string, object> hashtable = new Dictionary<string, object>();
 		private readonly string regionName;
 
 		public MyDummyCache(string regionName)
@@ -24,7 +23,8 @@ namespace NHibernate.Test.NHSpecificTest.NH3564
 
 		public object Get(object key)
 		{
-			return hashtable[KeyAsString(key)];
+			object value;
+			return hashtable.TryGetValue(KeyAsString(key), out value) ? value : null;
 		}
 
 		public void Put(object key, object value)

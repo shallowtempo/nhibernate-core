@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace NHibernate.Criterion
 {
@@ -10,7 +11,7 @@ namespace NHibernate.Criterion
 	{
 		private int _intCode;
 		private string _name;
-		private static Hashtable Instances = new Hashtable();
+		private static IDictionary<int, MatchMode> Instances = new Dictionary<int, MatchMode>();
 
 		static MatchMode()
 		{

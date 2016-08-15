@@ -17,7 +17,7 @@ namespace NHibernate.Test.Criteria.Lambda
 	public class LambdaFixtureBase
 	{
 
-		private Hashtable _visitedObjects = new Hashtable();
+		private IDictionary<object, object> _visitedObjects = new Dictionary<object, object>();
 		private Stack<string> _fieldPath = new Stack<string>();
 
 		protected ICriteria CreateTestCriteria(System.Type persistentClass)
@@ -135,7 +135,7 @@ namespace NHibernate.Test.Criteria.Lambda
 				return;
 			}
 
-			if (_visitedObjects.Contains(expected))
+			if (_visitedObjects.ContainsKey(expected))
 			{
 				_fieldPath.Pop();
 				return;

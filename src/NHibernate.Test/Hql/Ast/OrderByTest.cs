@@ -273,14 +273,14 @@ namespace NHibernate.Test.Hql.Ast
 
 				// NHibernate different behaviour hashtable does not maintain identity 
 				Assert.AreEqual(5, list.Count);
-				Assert.AreEqual(data.Zoo2.Name, ((Hashtable)list[0])["zname"]);
-				Assert.AreEqual(data.Zoo2.Address, ((Hashtable)list[0])["zaddress"]);
-				Assert.AreEqual(data.Zoo4.Name, ((Hashtable)list[1])["zname"]);
-				Assert.AreEqual(data.Zoo4.Address, ((Hashtable)list[1])["zaddress"]);
-				Assert.AreEqual(data.Zoo3.Name, ((Hashtable)list[2])["zname"]);
-				Assert.AreEqual(data.Zoo3.Address, ((Hashtable)list[2])["zaddress"]);
-				Assert.AreEqual(data.Zoo1.Name, ((Hashtable)list[3])["zname"]);
-				Assert.AreEqual(data.Zoo1.Address, ((Hashtable)list[3])["zaddress"]);
+				Assert.AreEqual(data.Zoo2.Name, ((IDictionary)list[0])["zname"]);
+				Assert.AreEqual(data.Zoo2.Address, ((IDictionary)list[0])["zaddress"]);
+				Assert.AreEqual(data.Zoo4.Name, ((IDictionary)list[1])["zname"]);
+				Assert.AreEqual(data.Zoo4.Address, ((IDictionary)list[1])["zaddress"]);
+				Assert.AreEqual(data.Zoo3.Name, ((IDictionary)list[2])["zname"]);
+				Assert.AreEqual(data.Zoo3.Address, ((IDictionary)list[2])["zaddress"]);
+				Assert.AreEqual(data.Zoo1.Name, ((IDictionary)list[3])["zname"]);
+				Assert.AreEqual(data.Zoo1.Address, ((IDictionary)list[3])["zaddress"]);
 
 				// ordered by address, name:
 				//   zoo3  Zoo         1312 Mockingbird Lane, Anywhere, IL USA
@@ -292,14 +292,14 @@ namespace NHibernate.Test.Hql.Ast
 						"select new map( z.name as zname, z.address as zaddress ) from Zoo z left join z.mammals m order by zaddress, zname"
 						).List();
 				Assert.AreEqual(5, list.Count);
-				Assert.AreEqual(data.Zoo3.Name, ((Hashtable)list[0])["zname"]);
-				Assert.AreEqual(data.Zoo3.Address, ((Hashtable)list[0])["zaddress"]);
-				Assert.AreEqual(data.Zoo4.Name, ((Hashtable)list[1])["zname"]);
-				Assert.AreEqual(data.Zoo4.Address, ((Hashtable)list[1])["zaddress"]);
-				Assert.AreEqual(data.Zoo2.Name, ((Hashtable)list[2])["zname"]);
-				Assert.AreEqual(data.Zoo2.Address, ((Hashtable)list[2])["zaddress"]);
-				Assert.AreEqual(data.Zoo1.Name, ((Hashtable)list[3])["zname"]);
-				Assert.AreEqual(data.Zoo1.Address, ((Hashtable)list[3])["zaddress"]);
+				Assert.AreEqual(data.Zoo3.Name, ((IDictionary)list[0])["zname"]);
+				Assert.AreEqual(data.Zoo3.Address, ((IDictionary)list[0])["zaddress"]);
+				Assert.AreEqual(data.Zoo4.Name, ((IDictionary)list[1])["zname"]);
+				Assert.AreEqual(data.Zoo4.Address, ((IDictionary)list[1])["zaddress"]);
+				Assert.AreEqual(data.Zoo2.Name, ((IDictionary)list[2])["zname"]);
+				Assert.AreEqual(data.Zoo2.Address, ((IDictionary)list[2])["zaddress"]);
+				Assert.AreEqual(data.Zoo1.Name, ((IDictionary)list[3])["zname"]);
+				Assert.AreEqual(data.Zoo1.Address, ((IDictionary)list[3])["zaddress"]);
 
 				txn.Commit();
 			}

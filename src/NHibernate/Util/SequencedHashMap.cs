@@ -63,6 +63,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using NHibernate.DebugHelpers;
@@ -173,7 +174,7 @@ namespace NHibernate.Util
 		/// <summary>
 		/// Map of keys to entries
 		/// </summary>
-		private Hashtable _entries;
+		private Dictionary<object, Entry> _entries;
 
 		/// <summary>
 		/// Holds the number of modifications that have occurred to the map, excluding modifications
@@ -214,7 +215,7 @@ namespace NHibernate.Util
 		/// </summary>
 		/// <param name="capacity">the initial size for the hashtable</param>
 		/// <param name="equalityComparer"></param>
-		public SequencedHashMap(int capacity, IEqualityComparer equalityComparer)
+		public SequencedHashMap(int capacity, IEqualityComparer<object> equalityComparer)
 			: this(capacity, 1.0F, equalityComparer)
 		{
 		}
@@ -224,7 +225,7 @@ namespace NHibernate.Util
 		/// the specified hash code provider and the specified comparer
 		/// </summary>
 		/// <param name="equalityComparer"></param>
-		public SequencedHashMap(IEqualityComparer equalityComparer)
+		public SequencedHashMap(IEqualityComparer<object> equalityComparer)
 			: this(0, 1.0F, equalityComparer)
 		{
 		}
@@ -236,10 +237,10 @@ namespace NHibernate.Util
 		/// <param name="capacity">the initial size for the hashtable</param>
 		/// <param name="loadFactor">the load factor for the hash table</param>
 		/// <param name="equalityComparer"></param>
-		public SequencedHashMap(int capacity, float loadFactor, IEqualityComparer equalityComparer)
+		public SequencedHashMap(int capacity, float loadFactor, IEqualityComparer<object> equalityComparer)
 		{
 			_sentinel = CreateSentinel();
-			_entries = new Hashtable(capacity, loadFactor, equalityComparer);
+			_entries = new Dictionary<object, Entry>(capacity, equalityComparer);
 		}
 
 		/// <summary>
@@ -285,17 +286,15 @@ namespace NHibernate.Util
 		{
 			get
 			{
-				Entry entry = (Entry)_entries[o];
-				if (entry == null) return null;
-
-				return entry.Value;
+				Entry entry;
+				return _entries.TryGetValue(o, out entry) ? entry.Value : null;
 			}
 			set
 			{
 				_modCount++;
 
-				Entry e = (Entry)_entries[o];
-				if (e != null)
+				Entry e;
+				if (_entries.TryGetValue(o, out e))
 				{
 					RemoveEntry(e);
 					e.Value = value;
@@ -502,8 +501,8 @@ namespace NHibernate.Util
 		/// <param name="key">The Key to remove.</param>
 		private void RemoveImpl(object key)
 		{
-			Entry e = (Entry)_entries[key];
-			if (e != null)
+			Entry e;
+			if (_entries.TryGetValue(key, out e))
 			{
 				_entries.Remove(key);
 				_modCount++;

@@ -1,5 +1,4 @@
-using System.Collections;
-
+using System.Collections.Generic;
 using NHibernate.Engine;
 
 namespace NHibernate.Context
@@ -20,22 +19,23 @@ namespace NHibernate.Context
 		{
 			get
 			{
-				IDictionary map = GetMap();
+				IDictionary<ISessionFactoryImplementor, ISession> map = GetMap();
 				if (map == null)
 				{
 					return null;
 				}
 				else
 				{
-					return map[_factory] as ISession;
+					ISession value;
+					return map.TryGetValue(_factory, out value) ? value : null;
 				}
 			}
 			set
 			{
-				IDictionary map = GetMap();
+				IDictionary<ISessionFactoryImplementor, ISession> map = GetMap();
 				if (map == null)
 				{
-					map = new Hashtable();
+					map = new Dictionary<ISessionFactoryImplementor, ISession>();
 					SetMap(map);
 				}
 				map[_factory] = value;
@@ -45,11 +45,11 @@ namespace NHibernate.Context
 		/// <summary>
 		/// Get the dictionary mapping session factory to its current session.
 		/// </summary>
-		protected abstract IDictionary GetMap();
+		protected abstract IDictionary<ISessionFactoryImplementor, ISession> GetMap();
 
 		/// <summary>
 		/// Set the map mapping session factory to its current session.
 		/// </summary>
-		protected abstract void SetMap(IDictionary value);
+		protected abstract void SetMap(IDictionary<ISessionFactoryImplementor, ISession> value);
 	}
 }

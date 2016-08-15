@@ -238,7 +238,7 @@ namespace NHibernate.Cache
 		/// <summary>
 		/// decrement a lock and put it back in the cache
 		/// </summary>
-		private void DecrementLock(object key, CacheLock @lock)
+		private void DecrementLock(CacheKey key, CacheLock @lock)
 		{
 			//decrement the lock
 			@lock.Unlock(cache.NextTimestamp());
@@ -275,7 +275,7 @@ namespace NHibernate.Cache
 			}
 		}
 
-		internal void HandleLockExpiry(object key)
+		internal void HandleLockExpiry(CacheKey key)
 		{
 			log.Warn("An item was expired by the cache while it was locked (increase your cache timeout): " + key);
 			long ts = cache.NextTimestamp() + cache.Timeout;

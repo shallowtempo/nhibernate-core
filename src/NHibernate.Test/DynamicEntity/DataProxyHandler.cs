@@ -1,11 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
 using NHibernate.Proxy.DynamicProxy;
 
 namespace NHibernate.Test.DynamicEntity
 {
 	public sealed class DataProxyHandler : Proxy.DynamicProxy.IInterceptor
 	{
-		private readonly Hashtable data = new Hashtable();
+		private readonly IDictionary<string, object> data = new Dictionary<string, object>();
 		private readonly string entityName;
 
 		public DataProxyHandler(string entityName, object id)
@@ -19,7 +20,7 @@ namespace NHibernate.Test.DynamicEntity
 			get { return entityName; }
 		}
 
-		public Hashtable Data
+		public IDictionary<string, object> Data
 		{
 			get { return data; }
 		}
@@ -41,7 +42,8 @@ namespace NHibernate.Test.DynamicEntity
 			else if (methodName.StartsWith("get_"))
 			{
 				string propertyName = methodName.Substring(4);
-				return data[propertyName];
+				object value;
+				return data.TryGetValue(propertyName, out value) ? value : null;
 			}
 			else if ("ToString".Equals(methodName))
 			{

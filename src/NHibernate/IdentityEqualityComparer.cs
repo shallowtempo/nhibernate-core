@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace NHibernate
 {
 	[Serializable]
-	public class IdentityEqualityComparer: IEqualityComparer
+	public class IdentityEqualityComparer: IEqualityComparer, IEqualityComparer<object>
 	{
 		#region IEqualityComparer Members
 

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using NHibernate.DomainModel.NHSpecific;
 using NUnit.Framework;
 
@@ -48,7 +49,7 @@ namespace NHibernate.Test.NHSpecificTest
 			Assert.AreEqual(ser.SerializableProperty, ser.Serial,
 			                "SerializablePorperty and Serial should both be 5 and 'serialize me'");
 
-			IDictionary props = new Hashtable();
+			IDictionary props = new Dictionary<object, object>();
 			props["foo"] = "bar";
 			props["bar"] = "foo";
 			ser.Serial = props;

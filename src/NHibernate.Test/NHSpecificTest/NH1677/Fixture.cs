@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using NHibernate.Cfg;
 using NUnit.Framework;
@@ -29,14 +30,14 @@ namespace NHibernate.Test.NHSpecificTest.NH1677
 				{
 					for (int i = 0; i < NumberOfRecordPerEntity; i++)
 					{
-						var entity1 = new Hashtable();
+						var entity1 = new Dictionary<object, object>();
 						entity1[Entity1Property] = EntityPropertyPrefix + i;
 						s.SaveOrUpdate(Entity1Name, entity1);
 					}
 
 					for (int i = 0; i < NumberOfRecordPerEntity; i++)
 					{
-						var entity2 = new Hashtable();
+						var entity2 = new Dictionary<object, object>();
 						entity2[Entity2Property] = EntityPropertyPrefix + i;
 						s.SaveOrUpdate(Entity2Name, entity2);
 					}

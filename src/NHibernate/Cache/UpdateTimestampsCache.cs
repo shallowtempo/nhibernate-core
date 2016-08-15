@@ -34,7 +34,7 @@ namespace NHibernate.Cache
 		}
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
-		public void PreInvalidate(object[] spaces)
+		public void PreInvalidate(string[] spaces)
 		{
 			//TODO: to handle concurrent writes correctly, this should return a Lock to the client
 			long ts = updateTimestamps.NextTimestamp() + updateTimestamps.Timeout;
@@ -47,7 +47,7 @@ namespace NHibernate.Cache
 
 		/// <summary></summary>
 		[MethodImpl(MethodImplOptions.Synchronized)]
-		public void Invalidate(object[] spaces)
+		public void Invalidate(string[] spaces)
 		{
 			//TODO: to handle concurrent writes correctly, the client should pass in a Lock
 			long ts = updateTimestamps.NextTimestamp();

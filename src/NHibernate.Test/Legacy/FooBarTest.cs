@@ -6,6 +6,7 @@ using System.Data.Common;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Iesi.Collections.Generic;
 using NHibernate.Connection;
@@ -5264,7 +5265,7 @@ namespace NHibernate.Test.Legacy
 			ISession s = OpenSession();
 			ITransaction t = s.BeginTransaction();
 			Baz baz = new Baz();
-			IDictionary bars = new Hashtable();
+			IDictionary<Bar, object> bars = new Dictionary<Bar, object>();
 			bars.Add(new Bar(), new object());
 			bars.Add(new Bar(), new object());
 			bars.Add(new Bar(), new object());
@@ -5275,7 +5276,7 @@ namespace NHibernate.Test.Legacy
 			s = OpenSession();
 			t = s.BeginTransaction();
 			baz = (Baz) s.Load(typeof(Baz), baz.Code);
-			IEnumerator enumer = bars.GetEnumerator();
+			IEnumerator<Bar> enumer = bars.Keys.ToList().GetEnumerator();
 			enumer.MoveNext();
 			bars.Remove(enumer.Current);
 			s.Delete(baz);

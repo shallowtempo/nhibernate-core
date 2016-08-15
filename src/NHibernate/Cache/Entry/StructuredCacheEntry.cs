@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using NHibernate.Engine;
 using NHibernate.Persister.Entity;
@@ -35,7 +36,7 @@ namespace NHibernate.Cache.Entry
 		{
 			CacheEntry entry = (CacheEntry)item;
 			string[] names = persister.PropertyNames;
-			IDictionary map = new Hashtable(names.Length + 2);
+			IDictionary map = new Dictionary<object, object>(names.Length + 2);
 			map["_subclass"] = entry.Subclass;
 			map["_version"] = entry.Version;
 			map["_lazyPropertiesUnfetched"] = entry.AreLazyPropertiesUnfetched;

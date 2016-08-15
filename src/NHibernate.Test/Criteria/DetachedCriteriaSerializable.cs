@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using NHibernate.Criterion;
 using NHibernate.Transform;
 using NHibernate.Type;
@@ -66,7 +67,7 @@ namespace NHibernate.Test.Criteria
 		{
 			ICriterion c = Expression.Eq("Name", "Gavin King");
 			NHAssert.IsSerializable(c);
-			IDictionary nameValue = new Hashtable(1);
+			IDictionary nameValue = new Dictionary<object, object>(1);
 			nameValue.Add("Name", "Ralph");
 			c = Expression.AllEq(nameValue);
 			NHAssert.IsSerializable(c);

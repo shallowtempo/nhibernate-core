@@ -33,7 +33,7 @@ namespace NHibernate.Test.NHSpecificTest.NH3571
 			get
 			{
 				if (_properties == null)
-					_properties = new Hashtable();
+					_properties = new Dictionary<object, object>();
 
 				return _properties;
 			}

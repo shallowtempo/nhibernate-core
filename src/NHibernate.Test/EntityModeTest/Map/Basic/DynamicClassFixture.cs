@@ -60,15 +60,15 @@ namespace NHibernate.Test.EntityModeTest.Map.Basic
 			{
 				t = s.BeginTransaction();
 
-				cars = new Hashtable();
+				cars = new Dictionary<object, object>();
 				cars["Description"] = "Cars";
 
-				IDictionary monaro = new Hashtable();
+				IDictionary monaro = new Dictionary<object, object>();
 				monaro["ProductLine"] = cars;
 				monaro["Name"] = "Monaro";
 				monaro["Description"] = "Holden Monaro";
 
-				IDictionary hsv = new Hashtable();
+				IDictionary hsv = new Dictionary<object, object>();
 				hsv["ProductLine"] = cars;
 				hsv["Name"] = "hsv";
 				hsv["Description"] = "Holden hsv";

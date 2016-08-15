@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using NHibernate.Dialect;
 using NUnit.Framework;
 
@@ -12,11 +14,11 @@ namespace NHibernate.Test.Hql
 	[TestFixture]
 	public class HQLFunctions : TestCase
 	{
-		static readonly Hashtable notSupportedStandardFunction;
+		static readonly IDictionary<string, System.Type[]> notSupportedStandardFunction;
 		static HQLFunctions()
 		{
 			notSupportedStandardFunction =
-				new Hashtable
+				new Dictionary<string, System.Type[]>()
 					{
 						{"locate", new[] {typeof (SQLiteDialect)}},
 						{"bit_length", new[] {typeof (SQLiteDialect)}},
@@ -32,11 +34,13 @@ namespace NHibernate.Test.Hql
 
 		private void IgnoreIfNotSupported(string functionName)
 		{
-			if (notSupportedStandardFunction.ContainsKey(functionName))
+			System.Type[] dialects;
+			if (notSupportedStandardFunction.TryGetValue(functionName, out dialects))
 			{
-				IList dialects = (IList)notSupportedStandardFunction[functionName];
-				if(dialects.Contains(Dialect.GetType()))
+				if (dialects.Contains(Dialect.GetType()))
+				{
 					Assert.Ignore(Dialect + " doesn't support "+functionName+" function.");
+				}
 			}
 		}
 

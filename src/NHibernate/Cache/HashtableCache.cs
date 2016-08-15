@@ -1,13 +1,13 @@
-using System.Collections;
+using System.Collections.Generic;
 
 namespace NHibernate.Cache
 {
 	/// <summary>
-	/// A simple <see cref="Hashtable" />-based cache
+	/// A simple <see cref="Dictionary{TKey,TValue}" />-based cache
 	/// </summary>
 	public class HashtableCache : ICache
 	{
-		private IDictionary hashtable = new Hashtable();
+		private IDictionary<object, object> hashtable = new Dictionary<object, object>();
 		private readonly string regionName;
 
 		#region ICache Members
@@ -20,7 +20,8 @@ namespace NHibernate.Cache
 		/// <summary></summary>
 		public object Get(object key)
 		{
-			return hashtable[key];
+			object value;
+			return hashtable.TryGetValue(key, out value) ? value : null;
 		}
 
 		/// <summary></summary>

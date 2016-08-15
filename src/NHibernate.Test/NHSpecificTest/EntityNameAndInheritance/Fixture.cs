@@ -1,5 +1,5 @@
 
-using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace NHibernate.Test.NHSpecificTest.EntityNameAndInheritance
@@ -15,7 +15,7 @@ namespace NHibernate.Test.NHSpecificTest.EntityNameAndInheritance
 			{
 				using (var tx = s.BeginTransaction())
 				{
-					id = (int)s.Save(entityName, new Hashtable());
+					id = (int)s.Save(entityName, new Dictionary<object, object>());
 					tx.Commit();
 				}
 			}

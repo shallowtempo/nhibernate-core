@@ -1,6 +1,6 @@
 #if FEATURE_SERIALIZATION
 
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using NHibernate.Cache;
@@ -9,7 +9,7 @@ namespace NHibernate.Test.NHSpecificTest.NH2898
 {
 	public class BinaryFormatterCache : ICache
 	{
-		private readonly IDictionary _hashtable = new Hashtable();
+		private readonly IDictionary<object, byte[]> _hashtable = new Dictionary<object, byte[]>();
 		private readonly string _regionName;
 
 		public BinaryFormatterCache(string regionName)
@@ -19,8 +19,8 @@ namespace NHibernate.Test.NHSpecificTest.NH2898
 
 		public object Get(object key)
 		{
-			var entry = _hashtable[key] as byte[];
-			if (entry == null)
+			byte[] entry;
+			if (!_hashtable.TryGetValue(key, out entry))
 				return null;
 
 			var fmt = new BinaryFormatter();

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using NHibernate.Cache;
 
@@ -75,7 +76,7 @@ namespace NHibernate.Stat
 		{
 			get
 			{
-				IDictionary map = new Hashtable();
+				IDictionary map = new Dictionary<object, object>();
 				//IDictionary<CacheKey, object> cacheMap = cache.ToMap();
 				//foreach (KeyValuePair<CacheKey, object> me in cacheMap)
 				//{

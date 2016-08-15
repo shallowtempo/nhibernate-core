@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using NHibernate.Engine;
 
 namespace NHibernate.Cache.Entry
@@ -9,7 +10,7 @@ namespace NHibernate.Cache.Entry
 		{
 			CollectionCacheEntry entry = (CollectionCacheEntry)item;
 			object[] state = entry.State;
-			IDictionary map = new Hashtable(state.Length);
+			IDictionary map = new Dictionary<object, object>(state.Length);
 			for (int i = 0; i < state.Length; )
 			{
 				map[state[i++]] = state[i++];

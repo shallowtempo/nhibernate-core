@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace NHibernate.Test.NHSpecificTest.NH2664
 {
@@ -13,7 +14,7 @@ namespace NHibernate.Test.NHSpecificTest.NH2664
 			get
 			{
 				if (_properties == null)
-					_properties = new Hashtable();
+					_properties = new Dictionary<object, object>();
 
 				return _properties;
 			}

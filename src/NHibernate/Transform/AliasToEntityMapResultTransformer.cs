@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace NHibernate.Transform
 {
@@ -10,7 +11,7 @@ namespace NHibernate.Transform
 
 		public override object TransformTuple(object[] tuple, string[] aliases)
 		{
-			IDictionary result = new Hashtable();
+			IDictionary result = new Dictionary<string, object>();
 			for (int i = 0; i < tuple.Length; i++)
 			{
 				string alias = aliases[i];

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using NHibernate.Engine;
 using NHibernate.Properties;
@@ -28,7 +29,7 @@ namespace NHibernate.Test.NHSpecificTest.NH251
 	/// </summary>
 	public class CustomAccessDO : IDynamicFieldContainer
 	{
-		public IDictionary dynamicFields = new Hashtable(); // may contain components
+		public IDictionary dynamicFields = new Dictionary<object, object>(); // may contain components
 		public int id;
 
 		public IDictionary Fields

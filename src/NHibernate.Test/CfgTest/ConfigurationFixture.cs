@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using NHibernate.Cfg;
@@ -48,7 +48,7 @@ namespace NHibernate.Test.CfgTest
 		{
 			//log4net.Config.DOMConfigurator.ConfigureAndWatch( new FileInfo("log4net.cfg.xml") ); //use xml file instead of config
 			Configuration cfg = new Configuration();
-			IDictionary props = new Hashtable();
+			IDictionary<string, string> props = new Dictionary<string, string>();
 
 			props[Environment.ConnectionProvider] = "NHibernate.Connection.DriverConnectionProvider";
 			props[Environment.Dialect] = "NHibernate.Dialect.MsSql2000Dialect";
@@ -56,9 +56,9 @@ namespace NHibernate.Test.CfgTest
 			props[Environment.ConnectionString] =
 				"Server=localhost;initial catalog=nhibernate;Integrated Security=SSPI";
 
-			foreach (DictionaryEntry de in props)
+			foreach (KeyValuePair<string, string> de in props)
 			{
-				cfg.SetProperty(de.Key.ToString(), de.Value.ToString());
+				cfg.SetProperty(de.Key, de.Value);
 			}
 
 			cfg.AddClass(typeof(Simple));

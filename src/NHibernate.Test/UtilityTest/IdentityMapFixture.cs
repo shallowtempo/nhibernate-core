@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using NHibernate.Util;
 using NUnit.Framework;
@@ -34,7 +35,7 @@ namespace NHibernate.Test.UtilityTest
 			noHashCode1 = new NoHashCode();
 			noHashCode2 = new NoHashCode();
 
-			expectedMap = new Hashtable();
+			expectedMap = new Dictionary<object, object>();
 			expectedMap.Add(item1, value1);
 			expectedMap.Add(item2, value2);
 		}
@@ -217,7 +218,7 @@ namespace NHibernate.Test.UtilityTest
 		public void SetItemsEqualHashCodeDiffIdentity()
 		{
 			IDictionary actualMap = GetIdentityMap();
-			IDictionary normalMap = new Hashtable();
+			IDictionary normalMap = new Dictionary<object, object>();
 
 			item1.HashCodeField = 3;
 			item2.HashCodeField = 3;

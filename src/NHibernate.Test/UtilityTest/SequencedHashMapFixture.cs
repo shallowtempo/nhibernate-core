@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using NHibernate.Util;
@@ -322,7 +323,7 @@ namespace NHibernate.Test.UtilityTest
 			{
 				object key;
 				object value;
-				hashtable = new Hashtable();
+				hashtable = new Dictionary<object, object>();
 				sequenced = new SequencedHashMap();
 				list = new ListDictionary();
 

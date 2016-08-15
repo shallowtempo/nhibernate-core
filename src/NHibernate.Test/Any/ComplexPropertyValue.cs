@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace NHibernate.Test.Any
@@ -6,7 +7,7 @@ namespace NHibernate.Test.Any
 	public class ComplexPropertyValue : IPropertyValue
 	{
 		private long id;
-		private IDictionary subProperties = new Hashtable();
+		private IDictionary subProperties = new Dictionary<object, object>();
 
 		public virtual long Id
 		{

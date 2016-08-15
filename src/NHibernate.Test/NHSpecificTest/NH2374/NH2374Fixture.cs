@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace NHibernate.Test.NHSpecificTest.NH2374
@@ -17,9 +18,9 @@ namespace NHibernate.Test.NHSpecificTest.NH2374
 				{
 					using (ITransaction t = s.BeginTransaction())
 					{
-						var parent = new Hashtable();
-						var child = new Hashtable
-						            	{
+						var parent = new Dictionary<object, object>();
+						var child = new Dictionary<object, object>
+										{
 						            		{"Parent", parent}
 						            	};
 
@@ -57,9 +58,9 @@ namespace NHibernate.Test.NHSpecificTest.NH2374
 			{
 				using (ITransaction t = s.BeginTransaction())
 				{
-					var parent = new Hashtable();
-					var child = new Hashtable
-					            	{
+					var parent = new Dictionary<object, object>();
+					var child = new Dictionary<object, object>
+									{
 					            		{"Parent", parent}
 					            	};
 

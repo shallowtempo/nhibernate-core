@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using NHibernate.Engine;
 
 namespace NHibernate.Context
@@ -15,12 +15,12 @@ namespace NHibernate.Context
 
 		public WebSessionContext(ISessionFactoryImplementor factory) : base(factory) {}
 
-		protected override IDictionary GetMap()
+		protected override IDictionary<ISessionFactoryImplementor, ISession> GetMap()
 		{
-			return ReflectiveHttpContext.HttpContextCurrentItems[SessionFactoryMapKey] as IDictionary;
+			return ReflectiveHttpContext.HttpContextCurrentItems[SessionFactoryMapKey] as IDictionary<ISessionFactoryImplementor, ISession>;
 		}
 
-		protected override void SetMap(IDictionary value)
+		protected override void SetMap(IDictionary<ISessionFactoryImplementor, ISession> value)
 		{
 			ReflectiveHttpContext.HttpContextCurrentItems[SessionFactoryMapKey] = value;
 		}

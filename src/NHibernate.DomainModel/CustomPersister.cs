@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using NHibernate.Cache;
 using NHibernate.Cache.Entry;
 using NHibernate.Engine;
@@ -19,7 +20,7 @@ namespace NHibernate.DomainModel
 	/// </summary>
 	public class CustomPersister : IEntityPersister
 	{
-		private static readonly Hashtable Instances = new Hashtable();
+		private static readonly IDictionary<object, Custom> Instances = new Dictionary<object, Custom>();
 		private static readonly IIdentifierGenerator Generator = new UUIDHexGenerator();
 
 		private static readonly IType[] Types = new IType[] { NHibernateUtil.String };
@@ -313,8 +314,8 @@ namespace NHibernate.DomainModel
 		{
 			// fails when optional object is supplied
 			Custom clone = null;
-			Custom obj = (Custom)Instances[id];
-			if (obj != null)
+			Custom obj;
+			if (Instances.TryGetValue(id, out obj))
 			{
 				clone = (Custom)obj.Clone();
 				TwoPhaseLoad.AddUninitializedEntity(session.GenerateEntityKey(id, this), clone, this, LockMode.None, false,
@@ -333,7 +334,7 @@ namespace NHibernate.DomainModel
 
 		public void Insert(object id, object[] fields, object obj, ISessionImplementor session)
 		{
-			Instances[id] = ((Custom)obj).Clone();
+			Instances[id] = (Custom)((Custom)obj).Clone();
 		}
 
 		public object Insert(object[] fields, object obj, ISessionImplementor session)
@@ -349,7 +350,7 @@ namespace NHibernate.DomainModel
 		public void Update(object id, object[] fields, int[] dirtyFields, bool hasDirtyCollection, object[] oldFields,
 		                   object oldVersion, object obj, object rowId, ISessionImplementor session)
 		{
-			Instances[id] = ((Custom)obj).Clone();
+			Instances[id] = (Custom)((Custom)obj).Clone();
 		}
 
 		public bool[] PropertyUpdateability
@@ -369,7 +370,8 @@ namespace NHibernate.DomainModel
 
 		public object GetCurrentVersion(object id, ISessionImplementor session)
 		{
-			return Instances[id];
+			Custom value;
+			return Instances.TryGetValue(id, out value) ? value : null;
 		}
 
 		public object ForceVersionIncrement(object id, object currentVersion, ISessionImplementor session)

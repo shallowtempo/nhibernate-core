@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.ServiceModel;
 
 using NHibernate.Engine;
@@ -30,12 +30,12 @@ namespace NHibernate.Context
 			}
 		}
 
-		protected override IDictionary GetMap()
+		protected override IDictionary<ISessionFactoryImplementor, ISession> GetMap()
 		{
 			return WcfOperationState.Map;
 		}
 
-		protected override void SetMap(IDictionary value)
+		protected override void SetMap(IDictionary<ISessionFactoryImplementor, ISession> value)
 		{
 			WcfOperationState.Map = value;
 		}
@@ -43,7 +43,7 @@ namespace NHibernate.Context
 
 	public class WcfStateExtension : IExtension<OperationContext>
 	{
-		public IDictionary Map { get; set; }
+		public IDictionary<ISessionFactoryImplementor, ISession> Map { get; set; }
 
 		// we don't really need implementations for these methods in this case
 		public void Attach(OperationContext owner) { }

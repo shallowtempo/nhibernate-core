@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.Remoting.Messaging;
 
 using NHibernate.Engine;
@@ -23,7 +23,7 @@ namespace NHibernate.Context
 		/// <summary>
 		/// The key is the session factory and the value is the bound session.
 		/// </summary>
-		protected override void SetMap(IDictionary value)
+		protected override void SetMap(IDictionary<ISessionFactoryImplementor, ISession> value)
 		{
 			CallContext.SetData(SessionFactoryMapKey, value);
 		}
@@ -31,9 +31,9 @@ namespace NHibernate.Context
 		/// <summary>
 		/// The key is the session factory and the value is the bound session.
 		/// </summary>
-		protected override IDictionary GetMap()
+		protected override IDictionary<ISessionFactoryImplementor, ISession> GetMap()
 		{
-			return CallContext.GetData(SessionFactoryMapKey) as IDictionary;
+			return CallContext.GetData(SessionFactoryMapKey) as IDictionary<ISessionFactoryImplementor, ISession>;
 		}
 	}
 }

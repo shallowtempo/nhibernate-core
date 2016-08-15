@@ -144,11 +144,11 @@ namespace NHibernate.Util
 	[Serializable]
 	public class WeakHashtable : IDictionary
 	{
-		private Hashtable innerHashtable = new Hashtable();
+		private IDictionary innerHashtable = new Dictionary<object, object>();
 
 		public void Scavenge()
 		{
-			var deadKeys = new List<object>();
+			var deadKeys = new List<WeakRefWrapper>();
 
 			foreach (DictionaryEntry de in innerHashtable)
 			{
@@ -161,7 +161,7 @@ namespace NHibernate.Util
 				}
 			}
 
-			foreach (object key in deadKeys)
+			foreach (WeakRefWrapper key in deadKeys)
 			{
 				innerHashtable.Remove(key);
 			}
@@ -185,7 +185,7 @@ namespace NHibernate.Util
 
 		public IDictionaryEnumerator GetEnumerator()
 		{
-			return new WeakEnumerator(innerHashtable.GetEnumerator());
+			return new WeakEnumerator(((IDictionary)innerHashtable).GetEnumerator());
 		}
 
 		public void Remove(object key)

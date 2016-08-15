@@ -10,19 +10,19 @@ namespace NHibernate.Test.NHSpecificTest.NH720
 	public class FooCacheProvider : ICacheProvider
 	{
 		private static readonly ILog log;
-		private static Hashtable caches;
+		private static IDictionary<string, FooCache> caches;
 
 		static FooCacheProvider()
 		{
 			log = LogManager.GetLogger(typeof(FooCacheProvider));
-			caches = new Hashtable();
+			caches = new Dictionary<string, FooCache>();
 		}
 
 		public static ICache BuildCacheStatic(string regionName, IDictionary<string,string> properties)
 		{
-			if (regionName != null && caches[regionName] != null)
+			if (regionName != null && caches.ContainsKey(regionName))
 			{
-				return caches[regionName] as ICache;
+				return caches[regionName];
 			}
 
 			if (regionName == null)

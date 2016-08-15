@@ -1,10 +1,11 @@
 using System.Collections;
+using System.Collections.Generic;
 
 namespace NHibernate.Test.Any
 {
 	public class PropertySet
 	{
-		private IDictionary generalProperties = new Hashtable();
+		private IDictionary generalProperties = new Dictionary<object, object>();
 		private long id;
 		private string name;
 		private IPropertyValue someSpecificProperty;

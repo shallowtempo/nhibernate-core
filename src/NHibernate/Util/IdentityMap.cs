@@ -46,7 +46,7 @@ namespace NHibernate.Util
 		/// <returns>A new IdentityMap based on a Hashtable.</returns>
 		public static IDictionary Instantiate(int size)
 		{
-			return new IdentityMap(new Hashtable(size, new IdentityEqualityComparer()));
+			return new IdentityMap(new Dictionary<object, object>(size, new IdentityEqualityComparer()));
 		}
 
 		/// <summary>

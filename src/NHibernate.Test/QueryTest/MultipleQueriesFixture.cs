@@ -218,13 +218,13 @@ namespace NHibernate.Test.QueryTest
 		/// Get the inner Hashtable from the IQueryCache.Cache
 		/// </summary>
 		/// <returns></returns>
-		public static Hashtable GetHashTableUsedAsQueryCache(ISessionFactoryImplementor factory)
+		public static Dictionary<object, object> GetHashTableUsedAsQueryCache(ISessionFactoryImplementor factory)
 		{
-			Hashtable hashTable = null;
+			Dictionary<object, object> hashTable = null;
 			var cache = (HashtableCache)factory.GetQueryCache(null).Cache;
 			var fieldInfo = typeof(HashtableCache).GetField("hashtable", BindingFlags.Instance | BindingFlags.NonPublic);
 			if (fieldInfo != null)
-				hashTable = (Hashtable)fieldInfo.GetValue(cache);
+				hashTable = (Dictionary<object, object>)fieldInfo.GetValue(cache);
 			return hashTable;
 		}
 

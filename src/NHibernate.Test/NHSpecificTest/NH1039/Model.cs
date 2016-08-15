@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace NHibernate.Test.NHSpecificTest.NH1039
@@ -23,7 +24,7 @@ namespace NHibernate.Test.NHSpecificTest.NH1039
 			set { _Name = value; }
 		}
 
-		private IDictionary _Properties = new Hashtable();
+		private IDictionary _Properties = new Dictionary<object, object>();
 		public virtual IDictionary Properties
 		{
 			get { return _Properties; }
