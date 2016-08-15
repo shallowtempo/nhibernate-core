@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Security;
-using System.Security.Permissions;
 using System.Text;
 using NHibernate.Collection;
 using NHibernate.Engine.Loading;
@@ -1495,11 +1494,7 @@ namespace NHibernate.Engine
 			InitTransientState();
 		}
 
-#if NET_4_0
 		[SecurityCritical]
-#else
-		[SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
-#endif
 		void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			log.Debug("serializing persistent-context");
