@@ -1,5 +1,8 @@
-﻿#if FEATURE_LEGACY_REFLECTION_API
+#if FEATURE_LEGACY_REFLECTION_API
 // ReSharper disable once CheckNamespace
+
+using System.Collections.Generic;
+
 namespace System.Reflection
 {
 	/// <summary>
@@ -22,6 +25,17 @@ namespace System.Reflection
 		public static T GetCustomAttribute<T>(this MemberInfo element) where T : Attribute
 		{
 			return (T)Attribute.GetCustomAttribute(element, typeof(T));
+		}
+
+		/// <summary>Retrieves a collection of custom attributes of a specified type that are applied to a specified assembly. </summary>
+		/// <returns>A collection of the custom attributes that are applied to <paramref name="element" /> and that match <paramref name="T" />, or an empty collection if no such attributes exist. </returns>
+		/// <param name="element">The assembly to inspect.</param>
+		/// <typeparam name="T">The type of attribute to search for.</typeparam>
+		/// <exception cref="T:System.ArgumentNullException">
+		/// <paramref name="element" /> is null. </exception>
+		public static IEnumerable<T> GetCustomAttributes<T>(this Assembly element) where T : Attribute
+		{
+			return (IEnumerable<T>) element.GetCustomAttributes(typeof(T), false);
 		}
 	}
 }

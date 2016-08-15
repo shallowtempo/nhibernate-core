@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Reflection;
 using System.Text;
 using NHibernate.SqlTypes;
 
@@ -16,7 +17,7 @@ namespace NHibernate.Type
 		protected AbstractEnumType(SqlType sqlType,System.Type enumType)
 			: base(sqlType)
 		{
-			if (enumType.IsEnum)
+			if (enumType.GetTypeInfo().IsEnum)
 			{
 				this.enumType = enumType;
 			}
