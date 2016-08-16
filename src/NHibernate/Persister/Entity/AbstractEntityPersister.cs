@@ -2571,7 +2571,7 @@ namespace NHibernate.Persister.Entity
 
 				if (sequentialResultSet != null)
 				{
-					sequentialResultSet.Close();
+					sequentialResultSet.Dispose();
 				}
 
 				return values;
