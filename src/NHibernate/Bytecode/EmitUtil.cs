@@ -179,7 +179,11 @@ namespace NHibernate.Bytecode
 			methodBuilder.SetImplementationFlags(
 				MethodImplAttributes.Runtime | MethodImplAttributes.Managed);
 
+#if FEATURE_LEGACY_REFLECTION_API
 			return delegateBuilder.CreateType();
+#else
+			return delegateBuilder.CreateTypeInfo().AsType();
+#endif
 		}
 
 		public static void EmitLoadType(ILGenerator il, System.Type type)
