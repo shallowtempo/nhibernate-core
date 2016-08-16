@@ -1,3 +1,5 @@
+#if FEATURE_SYSTEM_SERVICEMODEL
+
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
@@ -50,3 +52,5 @@ namespace NHibernate.Context
 		public void Detach(OperationContext owner) { }
 	}
 }
+
+#endif
