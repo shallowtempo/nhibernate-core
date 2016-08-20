@@ -1,3 +1,5 @@
+#if FEATURE_DATA_GETSCHEMATABLE
+
 using System.Data;
 using System.Data.Common;
 
@@ -25,3 +27,5 @@ namespace NHibernate.Tool.hbm2ddl
 	}
 
 }
+
+#endif
