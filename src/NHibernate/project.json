@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0-*",
+  "dependencies": {
+    "Antlr3.Runtime": "3.5.0.3-dev-201608090747",
+    "Microsoft.Extensions.Configuration": "1.0.0",
+    "Microsoft.Extensions.DependencyModel": "1.0.0",
+    "Microsoft.Extensions.PlatformAbstractions": "1.0.0",
+    "NETStandard.Library": "1.6.0",
+    "Remotion.Linq": "1.15.15",
+    "System.Data.Common": "4.1.0",
+    "System.Data.SqlClient": "4.1.0",
+    "System.Diagnostics.StackTrace": "4.0.1",
+    "System.Linq": "4.1.0",
+    "System.Linq.Queryable": "4.0.1",
+    "System.Reflection.Emit": "4.0.1",
+    "System.Reflection.Emit.ILGeneration": "4.0.1",
+    "System.Reflection.Emit.Lightweight": "4.0.1",
+    "System.Xml.XmlDocument": "4.0.1",
+    "System.Xml.XmlSerializer": "4.0.11",
+    "System.Xml.XPath": "4.0.1"
+  },
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": [ "dnxcore50", "portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1", "portable-net45+wpa81+wp80+win" ],
+      "buildOptions": {
+        "define": [ "NETSTANDARD", "FEATURE_DATA_GETCOLUMNSCHEMA", "FEATURE_INTERNALIZE_IESI", "FEATURE_NETCORE_ICLONEABLE_API", "FEATURE_NETCORE_REFLECTION_API" ]
+      }
+    }
+  },
+  "buildOptions": {
+    "nowarn": [ "CS3001", "CS3002", "CS3003", "CS3005" ]
+  }
+}
