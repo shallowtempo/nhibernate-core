@@ -49,7 +49,7 @@ namespace NHibernate.Proxy
 		private static bool IsDisposeMethod(MethodInfo method)
 		{
 			// NH-1464
-			return method.Name.Equals("Dispose") && method.MemberType == MemberTypes.Method && method.GetParameters().Length == 0;
+			return method.Name.Equals("Dispose") && /*method.MemberType == MemberTypes.Method &&*/ method.GetParameters().Length == 0;
 			// return method.Name.Equals("Dispose") && method.IsMethodOf(typeof(IDisposable));
 		}
 	}

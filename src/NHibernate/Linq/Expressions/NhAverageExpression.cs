@@ -20,17 +20,10 @@ namespace NHibernate.Linq.Expressions
 				inputType = inputType.NullableOf();
 			}
 
-			switch (System.Type.GetTypeCode(inputType))
-			{
-				case TypeCode.Int16:
-				case TypeCode.Int32:
-				case TypeCode.Int64:
-				case TypeCode.Single:
-				case TypeCode.Double:
-					return isNullable ? typeof(double?) : typeof (double);
-				case TypeCode.Decimal:
-					return isNullable ? typeof(decimal?) : typeof(decimal);
-			}
+			if (inputType == typeof(decimal))
+				return isNullable ? typeof(decimal?) : typeof(decimal);
+			if (inputType == typeof(short) || inputType == typeof(int) || inputType == typeof(long) || inputType == typeof(float) || inputType == typeof(double))
+				return isNullable ? typeof(double?) : typeof(double);
 
 			throw new NotSupportedException(inputType.FullName);
 		}

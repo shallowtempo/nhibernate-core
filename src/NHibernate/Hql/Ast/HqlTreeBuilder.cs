@@ -157,27 +157,38 @@ namespace NHibernate.Hql.Ast
 				return new HqlNull(_factory);
 			}
 
-			switch (System.Type.GetTypeCode(value.GetType()))
+			var type = value.GetType();
+			if (type == typeof(short) || type == typeof(int) || type == typeof(long))
 			{
-				case TypeCode.Int16:
-				case TypeCode.Int32:
-				case TypeCode.Int64:
-					return new HqlIntegerConstant(_factory, value.ToString());
-				case TypeCode.Single:
-					return new HqlFloatConstant(_factory, value.ToString());
-				case TypeCode.Double:
-					return new HqlDoubleConstant(_factory, value.ToString());
-				case TypeCode.Decimal:
-					return new HqlDecimalConstant(_factory, value.ToString());
-				case TypeCode.String:
-				case TypeCode.Char:
-					return new HqlStringConstant(_factory, "\'" + value + "\'");
-				case TypeCode.DateTime:
-					return new HqlStringConstant(_factory, "\'" + (DateTime)value + "\'");
-				case TypeCode.Boolean:
-					return (bool)value ? (HqlConstant)True() : (HqlConstant)False();
-				default:
-					throw new NotSupportedException(string.Format("The constant for '{0}' is not supported", value));
+				return new HqlIntegerConstant(_factory, value.ToString());
+			}
+			else if (type == typeof(float))
+			{
+				return new HqlFloatConstant(_factory, value.ToString());
+			}
+			else if (type == typeof(double))
+			{
+				return new HqlDoubleConstant(_factory, value.ToString());
+			}
+			else if (type == typeof(decimal))
+			{
+				return new HqlDecimalConstant(_factory, value.ToString());
+			}
+			else if (type == typeof(string) || type == typeof(char))
+			{
+				return new HqlStringConstant(_factory, "\'" + value + "\'");
+			}
+			else if (type == typeof(DateTime))
+			{
+				return new HqlStringConstant(_factory, "\'" + (DateTime) value + "\'");
+			}
+			else if (type == typeof(bool))
+			{
+				return (bool) value ? (HqlConstant) True() : (HqlConstant) False();
+			}
+			else
+			{
+				throw new NotSupportedException(string.Format("The constant for '{0}' is not supported", value));
 			}
 		}
 

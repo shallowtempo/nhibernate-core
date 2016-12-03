@@ -290,7 +290,7 @@ namespace NHibernate.Util
 					return null;
 				}
 
-				type = assembly.GetType(name.Type, throwOnError);
+				type = assembly.GetType(name.Type, throwOnError, false);
 
 				if (type == null)
 				{

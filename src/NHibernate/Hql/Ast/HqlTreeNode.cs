@@ -183,47 +183,56 @@ namespace NHibernate.Hql.Ast
 		{
 			type = type.UnwrapIfNullable();
 
-			switch (System.Type.GetTypeCode(type))
+			if (type == typeof(bool))
 			{
-				case TypeCode.Boolean:
-					SetText("bool");
-					break;
-				case TypeCode.Int16:
-					SetText("short");
-					break;
-				case TypeCode.Int32:
-					SetText("integer");
-					break;
-				case TypeCode.Int64:
-					SetText("long");
-					break;
-				case TypeCode.Decimal:
-					SetText("decimal");
-					break;
-				case TypeCode.Single:
-					SetText("single");
-					break;
-				case TypeCode.DateTime:
-					SetText("datetime");
-					break;
-				case TypeCode.String:
-					SetText("string");
-					break;
-				case TypeCode.Double:
-					SetText("double");
-					break;
-				default:
-					if (type == typeof(Guid))
-					{
-						SetText("guid");
-						break;
-					}
-					if (type == typeof(DateTimeOffset))
-					{
-						SetText("datetimeoffset");
-						break;
-					}
+				SetText("bool");
+			}
+			else if (type == typeof(short))
+			{
+				SetText("short");
+			}
+			else if (type == typeof(int))
+			{
+				SetText("integer");
+			}
+			else if (type == typeof(long))
+			{
+				SetText("long");
+			}
+			else if (type == typeof(decimal))
+			{
+				SetText("decimal");
+			}
+			else if (type == typeof(float))
+			{
+				SetText("single");
+			}
+			else if (type == typeof(DateTime))
+			{
+				SetText("datetime");
+			}
+			else if (type == typeof(string))
+			{
+				SetText("string");
+			}
+			else if (type == typeof(double))
+			{
+				SetText("double");
+			}
+			else
+			{
+				if (type == typeof(Guid))
+				{
+					SetText("guid");
+				}
+				else if (type == typeof(DateTimeOffset))
+				{
+					SetText("datetimeoffset");
+				}
+				else
+				{
 					throw new NotSupportedException(string.Format("Don't currently support idents of type {0}", type.Name));
+				}
 			}
 		}
 	}
@@ -588,13 +597,13 @@ namespace NHibernate.Hql.Ast
 		public HqlAs(IASTFactory factory, HqlExpression expression, System.Type type)
 			: base(HqlSqlWalker.AS, "as", factory, expression)
 		{
-			switch (System.Type.GetTypeCode(type))
+			if (type == typeof(int))
 			{
-				case TypeCode.Int32:
-					AddChild(new HqlIdent(factory, "integer"));
-					break;
-				default:
-					throw new InvalidOperationException();
+				AddChild(new HqlIdent(factory, "integer"));
+			}
+			else
+			{
+				throw new InvalidOperationException();
 			}
 		}
 	}

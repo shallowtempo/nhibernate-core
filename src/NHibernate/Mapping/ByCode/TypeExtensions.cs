@@ -40,18 +40,18 @@ namespace NHibernate.Mapping.ByCode
 
 		public static System.Type GetPropertyOrFieldType(this MemberInfo propertyOrField)
 		{
-			if (propertyOrField.MemberType == MemberTypes.Property)
+			if (propertyOrField is PropertyInfo)
 			{
 				return ((PropertyInfo) propertyOrField).PropertyType;
 			}
 
-			if (propertyOrField.MemberType == MemberTypes.Field)
+			if (propertyOrField is FieldInfo)
 			{
 				return ((FieldInfo) propertyOrField).FieldType;
 			}
 			
 			throw new ArgumentOutOfRangeException("propertyOrField",
-												  "Expected PropertyInfo or FieldInfo; found :" + propertyOrField.MemberType);
+												  "Expected PropertyInfo or FieldInfo; found :" + propertyOrField.GetType().Name);
 		}
 
 		public static MemberInfo DecodeMemberAccessExpression<TEntity>(Expression<Func<TEntity, object>> expression)
