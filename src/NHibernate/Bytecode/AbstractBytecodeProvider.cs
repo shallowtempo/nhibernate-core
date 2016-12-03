@@ -76,7 +76,7 @@ namespace NHibernate.Bytecode
 				throw new UnableToLoadProxyFactoryFactoryException(typeName, he);
 			}
 
-			if (typeof(IProxyFactoryFactory).GetTypeInfo().IsAssignableFrom(pffc) == false)
+			if (typeof(IProxyFactoryFactory).GetTypeInfo().IsAssignableFrom(pffc.GetTypeInfo()) == false)
 			{
 				var he = new HibernateByteCodeException(pffc.FullName + " does not implement " + typeof(IProxyFactoryFactory).FullName);
 				throw he;

@@ -201,7 +201,7 @@ namespace NHibernate.Criterion
 				return "null";
 			}
 			var type = value.GetType();
-			if (type.GetTypeInfo().IsPrimitive || CallToStringTypes.Any(t => t.GetTypeInfo().IsAssignableFrom(type)))
+			if (type.GetTypeInfo().IsPrimitive || CallToStringTypes.Any(t => t.GetTypeInfo().IsAssignableFrom(type.GetTypeInfo())))
 			{
 				return value.ToString();
 			}

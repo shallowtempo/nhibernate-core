@@ -503,7 +503,7 @@ namespace NHibernate.Type
 				IEntityPersister ownerPersister = GetPersister(session).OwnerEntityPersister;
 				// TODO: Fix this so it will work for non-POJO entity mode
 				System.Type ownerMappedClass = ownerPersister.GetMappedClass(session.EntityMode);
-				if (ownerMappedClass.GetTypeInfo().IsAssignableFrom(keyType.ReturnedClass) && keyType.ReturnedClass.IsInstanceOfType(key))
+				if (ownerMappedClass.GetTypeInfo().IsAssignableFrom(keyType.ReturnedClass.GetTypeInfo()) && keyType.ReturnedClass.IsInstanceOfType(key))
 				{
 					// the key is the owning entity itself, so get the ID from the key
 					ownerId = ownerPersister.GetIdentifier(key, session.EntityMode);
