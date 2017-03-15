@@ -20,9 +20,9 @@ namespace NHibernate.Linq.Expressions
 			Expression = expression;
 		}
 
-		protected override Expression VisitChildren(ExpressionTreeVisitor visitor)
+		protected override Expression VisitChildren(ExpressionVisitor visitor)
 		{
-			var newExpression = visitor.VisitExpression(Expression);
+			var newExpression = visitor.Visit(Expression);
 
 			return newExpression != Expression
 					   ? CreateNew(newExpression)

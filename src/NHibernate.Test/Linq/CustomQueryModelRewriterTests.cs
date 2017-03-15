@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using NHibernate.Linq;
 using NHibernate.Linq.Visitors;
 using NUnit.Framework;
 using Remotion.Linq;
@@ -44,12 +45,12 @@ namespace NHibernate.Test.Linq
 		{
 			public override void VisitWhereClause(WhereClause whereClause, QueryModel queryModel, int index)
 			{
-				whereClause.TransformExpressions(new Visitor().VisitExpression);
+				whereClause.TransformExpressions(new Visitor().Visit);
 			}
 
 			private class Visitor : ExpressionTreeVisitor
 			{
-				protected override Expression VisitBinaryExpression(BinaryExpression expression)
+				protected override Expression VisitBinary(BinaryExpression expression)
 				{
 					if (
 						expression.NodeType == ExpressionType.Equal ||
@@ -82,7 +83,7 @@ namespace NHibernate.Test.Linq
 						}
 					}
 
-					return base.VisitBinaryExpression(expression);
+					return base.VisitBinary(expression);
 				}
 			}
 		}

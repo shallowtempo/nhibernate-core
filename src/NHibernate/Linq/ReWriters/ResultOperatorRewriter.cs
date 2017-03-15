@@ -91,10 +91,10 @@ namespace NHibernate.Linq.ReWriters
 
 			public Expression Rewrite(Expression expression)
 			{
-				return VisitExpression(expression);
+				return Visit(expression);
 			}
 
-			protected override Expression VisitSubQueryExpression(SubQueryExpression expression)
+			protected override Expression VisitSubQuery(SubQueryExpression expression)
 			{
 				resultOperators.AddRange(
 					expression.QueryModel.ResultOperators
@@ -108,7 +108,7 @@ namespace NHibernate.Linq.ReWriters
 					return expression.QueryModel.MainFromClause.FromExpression;
 				}
 
-				return base.VisitSubQueryExpression(expression);
+				return base.VisitSubQuery(expression);
 			}
 		}
 	}

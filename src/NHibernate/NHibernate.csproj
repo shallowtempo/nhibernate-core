@@ -79,10 +79,16 @@
       <HintPath>..\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Remotion.Linq, Version=1.15.15.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Remotion.Linq.1.15.15.0\lib\portable-net45+wp80+wpa81+win\Remotion.Linq.dll</HintPath>
+    <Reference Include="Remotion.Linq, Version=2.1.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Remotion.Linq.2.1.1\lib\net45\Remotion.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Remotion.Linq.EagerFetching, Version=2.0.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Remotion.Linq.EagerFetching.2.0.1\lib\net45\Remotion.Linq.EagerFetching.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.ServiceModel" />
@@ -144,6 +150,8 @@
     <Compile Include="Connection\DriverConnectionProvider.cs" />
     <Compile Include="Connection\IConnectionProvider.cs" />
     <Compile Include="Connection\UserSuppliedConnectionProvider.cs" />
+    <Compile Include="Linq\Clauses\INhQueryModelVisitor.cs" />
+    <Compile Include="Linq\ExpressionTreeVisitor.cs" />
     <Compile Include="Dialect\PostgreSQL83Dialect.cs" />
     <Compile Include="Tool\hbm2ddl\IDatabaseMetadata.cs" />
     <Compile Include="Util\DelegateHelper.cs" />
@@ -1799,6 +1807,7 @@
     <Antlr3 Include="Hql\Ast\ANTLR\Hql.g" />
     <Antlr3 Include="Hql\Ast\ANTLR\HqlSqlWalker.g" />
     <Antlr3 Include="Hql\Ast\ANTLR\SqlGenerator.g" />
+    <None Include="app.config" />
     <None Include="NHibernate.build" />
     <None Include="NHibernate.nuspec.template" />
     <None Include="packages.config" />

@@ -184,11 +184,11 @@ namespace NHibernate.Linq.Visitors
 
 		private Expression ExpressionSearcher(Expression arg)
 		{
-			VisitExpression(arg);
+			Visit(arg);
 			return arg;
 		}
 
-		protected override Expression VisitQuerySourceReferenceExpression(QuerySourceReferenceExpression expression)
+		protected override Expression VisitQuerySourceReference(QuerySourceReferenceExpression expression)
 		{
 			if (expression.ReferencedQuerySource == _querySource)
 			{

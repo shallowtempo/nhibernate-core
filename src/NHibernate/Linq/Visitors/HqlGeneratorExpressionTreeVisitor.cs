@@ -93,7 +93,7 @@ namespace NHibernate.Linq.Visitors
 				case ExpressionType.Call:
 					return VisitMethodCallExpression((MethodCallExpression) expression);
 					//case ExpressionType.New:
-					//    return VisitNewExpression((NewExpression)expression);
+					//    return VisitNew((NewExpression)expression);
 					//case ExpressionType.NewArrayBounds:
 				case ExpressionType.NewArrayInit:
 					return VisitNewArrayExpression((NewArrayExpression) expression);

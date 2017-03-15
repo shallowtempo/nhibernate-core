@@ -28,7 +28,7 @@ namespace NHibernate.Linq.Expressions
 			get { return _members; }
 		}
 
-		protected override Expression VisitChildren(ExpressionTreeVisitor visitor)
+		protected override Expression VisitChildren(ExpressionVisitor visitor)
 		{
 			var arguments = visitor.VisitAndConvert(Arguments, "VisitNhNew");
 
@@ -52,9 +52,9 @@ namespace NHibernate.Linq.Expressions
 			private set;
 		}
 
-		protected override Expression VisitChildren(ExpressionTreeVisitor visitor)
+		protected override Expression VisitChildren(ExpressionVisitor visitor)
 		{
-			var newExpression = visitor.VisitExpression(Expression);
+			var newExpression = visitor.Visit(Expression);
 
 			return newExpression != Expression
 					   ? new NhStarExpression(newExpression)

@@ -37,7 +37,7 @@ namespace NHibernate.Linq.Visitors
 			_functionRegistry = parameters.SessionFactory.Settings.LinqToHqlGeneratorsRegistry;
 		}
 
-		internal Expression Visit(Expression expression)
+		internal Expression Nominate(Expression expression)
 		{
 			HqlCandidates = new HashSet<Expression>();
 			ContainsUntranslatedMethodCalls = false;
@@ -45,10 +45,10 @@ namespace NHibernate.Linq.Visitors
 			_stateStack = new Stack<bool>();
 			_stateStack.Push(false);
 
-			return VisitExpression(expression);
+			return Visit(expression);
 		}
 
-		public override Expression VisitExpression(Expression expression)
+		public override Expression Visit(Expression expression)
 		{
 			if (expression == null)
 				return null;
@@ -86,7 +86,7 @@ namespace NHibernate.Linq.Visitors
 					return expression;
 				}
 
-				expression = base.VisitExpression(expression);
+				expression = base.Visit(expression);
 
 				if (_canBeCandidate)
 				{

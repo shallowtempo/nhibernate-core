@@ -1,10 +1,10 @@
 using System.Linq.Expressions;
 using Remotion.Linq.Clauses;
-using Remotion.Linq.Clauses.ExpressionTreeVisitors;
+using Remotion.Linq.Clauses.ExpressionVisitors;
 
 namespace NHibernate.Linq.Clauses
 {
-	public class NhWithClause : WhereClause
+	public class NhWithClause : NhWhereClause
 	{
 		public NhWithClause(Expression predicate)
 			: base(predicate)
@@ -13,7 +13,7 @@ namespace NHibernate.Linq.Clauses
 
 		public override string ToString()
 		{
-			return "with " + FormattingExpressionTreeVisitor.Format(Predicate);
+			return "with " + Predicate;
 		}
 	}
 }

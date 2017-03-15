@@ -15,7 +15,7 @@ namespace NHibernate.Linq
             if (query == null) throw new ArgumentNullException(nameof(query));
             if (relatedObjectSelector == null) throw new ArgumentNullException(nameof(relatedObjectSelector));
 
-            var methodInfo = ((MethodInfo)MethodBase.GetCurrentMethod()).MakeGenericMethod(typeof(TOriginating), typeof(TRelated));
+	        var methodInfo = ((MethodInfo)MethodBase.GetCurrentMethod()).MakeGenericMethod(typeof(TOriginating), typeof(TRelated));
             return CreateFluentFetchRequest<TOriginating, TRelated>(methodInfo, query, relatedObjectSelector);
         }
 
@@ -25,7 +25,7 @@ namespace NHibernate.Linq
             if (query == null) throw new ArgumentNullException(nameof(query));
             if (relatedObjectSelector == null) throw new ArgumentNullException(nameof(relatedObjectSelector));
 
-            var methodInfo = ((MethodInfo)MethodBase.GetCurrentMethod()).MakeGenericMethod(typeof(TOriginating), typeof(TRelated));
+	        var methodInfo = ((MethodInfo)MethodBase.GetCurrentMethod()).MakeGenericMethod(typeof(TOriginating), typeof(TRelated));
             return CreateFluentFetchRequest<TOriginating, TRelated>(methodInfo, query, relatedObjectSelector);
         }
 
@@ -35,7 +35,7 @@ namespace NHibernate.Linq
             if (query == null) throw new ArgumentNullException(nameof(query));
             if (relatedObjectSelector == null) throw new ArgumentNullException(nameof(relatedObjectSelector));
 
-            var methodInfo = ((MethodInfo)MethodBase.GetCurrentMethod()).MakeGenericMethod(typeof(TQueried), typeof(TFetch), typeof(TRelated));
+	        var methodInfo = ((MethodInfo)MethodBase.GetCurrentMethod()).MakeGenericMethod(typeof(TQueried), typeof(TFetch), typeof(TRelated));
             return CreateFluentFetchRequest<TQueried, TRelated>(methodInfo, query, relatedObjectSelector);
         }
 
@@ -45,7 +45,7 @@ namespace NHibernate.Linq
             if (query == null) throw new ArgumentNullException(nameof(query));
             if (relatedObjectSelector == null) throw new ArgumentNullException(nameof(relatedObjectSelector));
 
-            var methodInfo = ((MethodInfo)MethodBase.GetCurrentMethod()).MakeGenericMethod(typeof(TQueried), typeof(TFetch), typeof(TRelated));
+	        var methodInfo = ((MethodInfo)MethodBase.GetCurrentMethod()).MakeGenericMethod(typeof(TQueried), typeof(TFetch), typeof(TRelated));
             return CreateFluentFetchRequest<TQueried, TRelated>(methodInfo, query, relatedObjectSelector);
         }
 

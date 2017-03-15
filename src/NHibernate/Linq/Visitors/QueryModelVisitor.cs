@@ -302,12 +302,13 @@ namespace NHibernate.Linq.Visitors
 		{
 			var querySourceName = VisitorParameters.QuerySourceNamer.GetName(fromClause);
 
-			var joinClause = fromClause as NhJoinClause;
-			if (joinClause != null)
-			{
-				VisitNhJoinClause(querySourceName, joinClause);
-			}
-			else if (fromClause.FromExpression is MemberExpression)
+			//var joinClause = fromClause as NhJoinClause;
+			//if (joinClause != null)
+			//{
+			//	VisitNhJoinClause(querySourceName, joinClause);
+			//}
+			//else
+			if (fromClause.FromExpression is MemberExpression)
 			{
 				// It's a join
 				_hqlTree.AddFromClause(
@@ -328,7 +329,7 @@ namespace NHibernate.Linq.Visitors
 			base.VisitAdditionalFromClause(fromClause, queryModel, index);
 		}
 
-		private void VisitNhJoinClause(string querySourceName, NhJoinClause joinClause)
+		public void VisitNhJoinClause(string querySourceName, NhJoinClause joinClause, int index)
 		{
 			var expression = HqlGeneratorExpressionTreeVisitor.Visit(joinClause.FromExpression, VisitorParameters).AsExpression();
 			var alias = _hqlTree.TreeBuilder.Alias(querySourceName);
@@ -378,7 +379,7 @@ namespace NHibernate.Linq.Visitors
 
 			var visitor = new SelectClauseVisitor(typeof(object[]), VisitorParameters);
 
-			visitor.Visit(selectClause.Selector);
+			visitor.VisitSelector(selectClause.Selector);
 
 			if (visitor.ProjectionExpression != null)
 			{
@@ -393,7 +394,7 @@ namespace NHibernate.Linq.Visitors
 		public override void VisitWhereClause(WhereClause whereClause, QueryModel queryModel, int index)
 		{
 			var visitor = new SimplifyConditionalVisitor();
-			whereClause.Predicate = visitor.VisitExpression(whereClause.Predicate);
+			whereClause.Predicate = visitor.Visit(whereClause.Predicate);
 
 			// Visit the predicate to build the query
 			var expression = HqlGeneratorExpressionTreeVisitor.Visit(whereClause.Predicate, VisitorParameters).ToBooleanExpression();

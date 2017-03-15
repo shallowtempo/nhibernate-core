@@ -17,11 +17,11 @@ namespace NHibernate.Linq.GroupJoin
 
 		public GroupJoinClause Detect(Expression expression)
 		{
-			VisitExpression(expression);
+			Visit(expression);
 			return _groupJoin;
 		}
 
-		protected override Expression VisitQuerySourceReferenceExpression(QuerySourceReferenceExpression expression)
+		protected override Expression VisitQuerySourceReference(QuerySourceReferenceExpression expression)
 		{
 			var groupJoinClause = expression.ReferencedQuerySource as GroupJoinClause;
 			if (groupJoinClause != null && _results.AggregatingClauses.Contains(groupJoinClause))
@@ -29,7 +29,7 @@ namespace NHibernate.Linq.GroupJoin
 				_groupJoin = groupJoinClause;
 			}
 
-			return base.VisitQuerySourceReferenceExpression(expression);
+			return base.VisitQuerySourceReference(expression);
 		}
 	}
 }

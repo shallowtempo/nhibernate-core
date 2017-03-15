@@ -16,16 +16,16 @@ namespace NHibernate.Linq.GroupBy
 		{
 			_containsNakedQuerySourceReferenceExpression = false;
 
-			VisitExpression(expression);
+			Visit(expression);
 
 			return _containsNakedQuerySourceReferenceExpression;
 		}
 
-		protected override Expression VisitMemberExpression(MemberExpression expression)
+		protected override Expression VisitMember(MemberExpression expression)
 		{
 			return expression.IsGroupingKey()
 					   ? expression
-					   : base.VisitMemberExpression(expression);
+					   : base.VisitMember(expression);
 		}
 
 		protected override Expression VisitNhAggregate(NhAggregatedExpression expression)
@@ -33,7 +33,7 @@ namespace NHibernate.Linq.GroupBy
 			return expression;
 		}
 
-		protected override Expression VisitQuerySourceReferenceExpression(QuerySourceReferenceExpression expression)
+		protected override Expression VisitQuerySourceReference(QuerySourceReferenceExpression expression)
 		{
 			_containsNakedQuerySourceReferenceExpression = true;
 			return expression;
