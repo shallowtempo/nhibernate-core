@@ -12,7 +12,7 @@ using Remotion.Linq.Clauses.ResultOperators;
 
 namespace NHibernate.Linq.Visitors
 {
-	public class HqlGeneratorExpressionTreeVisitor : IHqlExpressionVisitor
+	public class HqlGeneratorExpressionVisitor : IHqlExpressionVisitor
 	{
 		private readonly HqlTreeBuilder _hqlTreeBuilder = new HqlTreeBuilder();
 		private readonly VisitorParameters _parameters;
@@ -20,10 +20,10 @@ namespace NHibernate.Linq.Visitors
 
 		public static HqlTreeNode Visit(Expression expression, VisitorParameters parameters)
 		{
-			return new HqlGeneratorExpressionTreeVisitor(parameters).VisitExpression(expression);
+			return new HqlGeneratorExpressionVisitor(parameters).VisitExpression(expression);
 		}
 
-		public HqlGeneratorExpressionTreeVisitor(VisitorParameters parameters)
+		public HqlGeneratorExpressionVisitor(VisitorParameters parameters)
 		{
 			_functionRegistry = parameters.SessionFactory.Settings.LinqToHqlGeneratorsRegistry;
 			_parameters = parameters;
@@ -238,7 +238,7 @@ possible solutions:
 
 		protected HqlTreeNode VisitNhDistinct(NhDistinctExpression expression)
 		{
-			var visitor = new HqlGeneratorExpressionTreeVisitor(_parameters);
+			var visitor = new HqlGeneratorExpressionVisitor(_parameters);
 			return _hqlTreeBuilder.ExpressionSubTreeHolder(_hqlTreeBuilder.Distinct(), visitor.VisitExpression(expression.Expression));
 		}
 

@@ -281,7 +281,7 @@ namespace NHibernate.Linq.Visitors
 		public override void VisitMainFromClause(MainFromClause fromClause, QueryModel queryModel)
 		{
 			var querySourceName = VisitorParameters.QuerySourceNamer.GetName(fromClause);
-			var hqlExpressionTree = HqlGeneratorExpressionTreeVisitor.Visit(fromClause.FromExpression, VisitorParameters);
+			var hqlExpressionTree = HqlGeneratorExpressionVisitor.Visit(fromClause.FromExpression, VisitorParameters);
 
 			_hqlTree.AddFromClause(_hqlTree.TreeBuilder.Range(hqlExpressionTree, _hqlTree.TreeBuilder.Alias(querySourceName)));
 
@@ -313,7 +313,7 @@ namespace NHibernate.Linq.Visitors
 				// It's a join
 				_hqlTree.AddFromClause(
 					_hqlTree.TreeBuilder.Join(
-						HqlGeneratorExpressionTreeVisitor.Visit(fromClause.FromExpression, VisitorParameters).AsExpression(),
+						HqlGeneratorExpressionVisitor.Visit(fromClause.FromExpression, VisitorParameters).AsExpression(),
 						_hqlTree.TreeBuilder.Alias(querySourceName)));
 			}
 			else
@@ -321,7 +321,7 @@ namespace NHibernate.Linq.Visitors
 				// TODO - exact same code as in MainFromClause; refactor this out
 				_hqlTree.AddFromClause(
 					_hqlTree.TreeBuilder.Range(
-						HqlGeneratorExpressionTreeVisitor.Visit(fromClause.FromExpression, VisitorParameters),
+						HqlGeneratorExpressionVisitor.Visit(fromClause.FromExpression, VisitorParameters),
 						_hqlTree.TreeBuilder.Alias(querySourceName)));
 
 			}
@@ -331,7 +331,7 @@ namespace NHibernate.Linq.Visitors
 
 		private void VisitNhJoinClause(string querySourceName, NhJoinClause joinClause)
 		{
-			var expression = HqlGeneratorExpressionTreeVisitor.Visit(joinClause.FromExpression, VisitorParameters).AsExpression();
+			var expression = HqlGeneratorExpressionVisitor.Visit(joinClause.FromExpression, VisitorParameters).AsExpression();
 			var alias = _hqlTree.TreeBuilder.Alias(querySourceName);
 
 			HqlTreeNode hqlJoin;
@@ -346,7 +346,7 @@ namespace NHibernate.Linq.Visitors
 
 			foreach (var withClause in joinClause.Restrictions)
 			{
-				var booleanExpression = HqlGeneratorExpressionTreeVisitor.Visit(withClause.Predicate, VisitorParameters).ToBooleanExpression();
+				var booleanExpression = HqlGeneratorExpressionVisitor.Visit(withClause.Predicate, VisitorParameters).ToBooleanExpression();
 				hqlJoin.AddChild(_hqlTree.TreeBuilder.With(booleanExpression));
 			}
 
@@ -397,7 +397,7 @@ namespace NHibernate.Linq.Visitors
 			whereClause.Predicate = visitor.Visit(whereClause.Predicate);
 
 			// Visit the predicate to build the query
-			var expression = HqlGeneratorExpressionTreeVisitor.Visit(whereClause.Predicate, VisitorParameters).ToBooleanExpression();
+			var expression = HqlGeneratorExpressionVisitor.Visit(whereClause.Predicate, VisitorParameters).ToBooleanExpression();
 			if (whereClause is NhHavingClause)
 			{
 				_hqlTree.AddHavingClause(expression);
@@ -412,7 +412,7 @@ namespace NHibernate.Linq.Visitors
 		{
 			foreach (var clause in orderByClause.Orderings)
 			{
-				_hqlTree.AddOrderByClause(HqlGeneratorExpressionTreeVisitor.Visit(clause.Expression, VisitorParameters).AsExpression(),
+				_hqlTree.AddOrderByClause(HqlGeneratorExpressionVisitor.Visit(clause.Expression, VisitorParameters).AsExpression(),
 								clause.OrderingDirection == OrderingDirection.Asc
 									? _hqlTree.TreeBuilder.Ascending()
 									: (HqlDirectionStatement)_hqlTree.TreeBuilder.Descending());
@@ -428,7 +428,7 @@ namespace NHibernate.Linq.Visitors
 
 			_hqlTree.AddFromClause(
 				_hqlTree.TreeBuilder.Range(
-					HqlGeneratorExpressionTreeVisitor.Visit(joinClause.InnerSequence, VisitorParameters),
+					HqlGeneratorExpressionVisitor.Visit(joinClause.InnerSequence, VisitorParameters),
 					_hqlTree.TreeBuilder.Alias(joinClause.ItemName)));
 		}
 
@@ -443,7 +443,7 @@ namespace NHibernate.Linq.Visitors
 			havingClause.Predicate = visitor.Visit(havingClause.Predicate);
 
 			// Visit the predicate to build the query
-			var expression = HqlGeneratorExpressionTreeVisitor.Visit(havingClause.Predicate, VisitorParameters).AsBooleanExpression();
+			var expression = HqlGeneratorExpressionVisitor.Visit(havingClause.Predicate, VisitorParameters).AsBooleanExpression();
 			_hqlTree.AddHavingClause(expression);
 		}
 
@@ -453,7 +453,7 @@ namespace NHibernate.Linq.Visitors
 			withClause.Predicate = visitor.Visit(withClause.Predicate);
 
 			// Visit the predicate to build the query
-			var expression = HqlGeneratorExpressionTreeVisitor.Visit(withClause.Predicate, VisitorParameters).AsBooleanExpression();
+			var expression = HqlGeneratorExpressionVisitor.Visit(withClause.Predicate, VisitorParameters).AsBooleanExpression();
 			_hqlTree.AddWhereClause(expression);
 		}
 

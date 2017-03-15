@@ -16,13 +16,13 @@ namespace NHibernate.Linq.Visitors
 		private readonly VisitorParameters _parameters;
 		private int _iColumn;
 		private List<HqlExpression> _hqlTreeNodes = new List<HqlExpression>();
-		private readonly HqlGeneratorExpressionTreeVisitor _hqlVisitor;
+		private readonly HqlGeneratorExpressionVisitor _hqlVisitor;
 
 		public SelectClauseVisitor(System.Type inputType, VisitorParameters parameters)
 		{
 			_inputParameter = Expression.Parameter(inputType, "input");
 			_parameters = parameters;
-			_hqlVisitor = new HqlGeneratorExpressionTreeVisitor(_parameters);
+			_hqlVisitor = new HqlGeneratorExpressionVisitor(_parameters);
 		}
 
 		public LambdaExpression ProjectionExpression { get; private set; }

@@ -333,7 +333,7 @@
     <Compile Include="Linq\ExpressionTransformers\SimplifyCompareTransformer.cs" />
     <Compile Include="Linq\LinqLogging.cs" />
     <Compile Include="Linq\SqlMethods.cs" />
-    <Compile Include="Linq\Visitors\NhPartialEvaluatingExpressionTreeVisitor.cs" />
+    <Compile Include="Linq\Visitors\NhPartialEvaluatingExpressionVisitor.cs" />
     <Compile Include="Linq\QuerySourceNamer.cs" />
     <Compile Include="Linq\ReWriters\AddJoinsReWriter.cs" />
     <Compile Include="Linq\ReWriters\MoveOrderByToEndRewriter.cs" />
@@ -1052,11 +1052,11 @@
     <Compile Include="Linq\ExpressionToHqlTranslationResults.cs" />
     <Compile Include="Linq\EnumerableHelper.cs" />
     <Compile Include="Linq\GroupBy\GroupBySelectClauseRewriter.cs" />
-    <Compile Include="Linq\Visitors\HqlGeneratorExpressionTreeVisitor.cs" />
+    <Compile Include="Linq\Visitors\HqlGeneratorExpressionVisitor.cs" />
     <Compile Include="Linq\LinqExtensionMethods.cs" />
     <Compile Include="Linq\ReWriters\MergeAggregatingResultsRewriter.cs" />
     <Compile Include="Param\NamedParameter.cs" />
-    <Compile Include="Linq\Visitors\NhExpressionTreeVisitor.cs" />
+    <Compile Include="Linq\Visitors\NhExpressionVisitor.cs" />
     <Compile Include="Linq\Expressions\NhNewExpression.cs" />
     <Compile Include="Linq\NhQueryable.cs" />
     <Compile Include="Linq\ResultOperators\NonAggregatingGroupBy.cs" />

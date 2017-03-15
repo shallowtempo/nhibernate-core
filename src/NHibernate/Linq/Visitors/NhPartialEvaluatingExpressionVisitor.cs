@@ -6,7 +6,7 @@ using Remotion.Linq.Parsing.ExpressionVisitors.TreeEvaluation;
 
 namespace NHibernate.Linq.Visitors
 {
-	internal class NhPartialEvaluatingExpressionTreeVisitor : RelinqExpressionVisitor, IPartialEvaluationExceptionExpressionVisitor
+	internal class NhPartialEvaluatingExpressionVisitor : RelinqExpressionVisitor, IPartialEvaluationExceptionExpressionVisitor
 	{
 		protected override Expression VisitConstant(ConstantExpression expression)
 		{
@@ -22,7 +22,7 @@ namespace NHibernate.Linq.Visitors
 		public static Expression EvaluateIndependentSubtrees(Expression expression)
 		{
 			var evaluatedExpression = PartialEvaluatingExpressionVisitor.EvaluateIndependentSubtrees(expression, new NullEvaluatableExpressionFilter());
-			return new NhPartialEvaluatingExpressionTreeVisitor().Visit(evaluatedExpression);
+			return new NhPartialEvaluatingExpressionVisitor().Visit(evaluatedExpression);
 		}
 
 		public Expression VisitPartialEvaluationException(PartialEvaluationExceptionExpression expression)

@@ -8,7 +8,7 @@ using Remotion.Linq.Clauses.Expressions;
 
 namespace NHibernate.Linq.GroupJoin
 {
-	internal class GroupJoinAggregateDetectionVisitor : NhExpressionTreeVisitor
+	internal class GroupJoinAggregateDetectionVisitor : NhExpressionVisitor
 	{
 		private readonly HashSet<GroupJoinClause> _groupJoinClauses;
 		private readonly StackFlag _inAggregate = new StackFlag();

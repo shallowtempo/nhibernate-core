@@ -34,7 +34,7 @@ namespace NHibernate.Linq
 		/// proxy with a ParameterExpression. The name of the parameter will be a string
 		/// representing the proxied entity, without initializing it.
 		/// </summary>
-		private class ProxyReplacingExpressionVisitor : NhExpressionTreeVisitor
+		private class ProxyReplacingExpressionVisitor : NhExpressionVisitor
 		{
 			// See also e.g. Remotion.Linq.Clauses.ExpressionVisitors.FormattingExpressionTreeVisitor
 			// for another example of this technique.
