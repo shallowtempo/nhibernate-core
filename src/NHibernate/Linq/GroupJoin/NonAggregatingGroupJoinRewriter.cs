@@ -154,7 +154,7 @@ namespace NHibernate.Linq.Visitors
 
 	}
 
-	internal class QuerySourceUsageLocator : ExpressionTreeVisitor
+	internal class QuerySourceUsageLocator : RelinqExpressionVisitor
 	{
 		private readonly IQuerySource _querySource;
 		private bool _references;

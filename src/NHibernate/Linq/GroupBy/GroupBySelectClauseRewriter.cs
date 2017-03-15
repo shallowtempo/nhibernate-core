@@ -6,12 +6,13 @@ using Remotion.Linq;
 using Remotion.Linq.Clauses;
 using Remotion.Linq.Clauses.Expressions;
 using Remotion.Linq.Clauses.ResultOperators;
+using Remotion.Linq.Parsing;
 using Remotion.Linq.Parsing.ExpressionVisitors;
 
 namespace NHibernate.Linq.GroupBy
 {
 	//This should be renamed. It handles entire querymodels, not just select clauses
-	internal class GroupBySelectClauseRewriter : ExpressionTreeVisitor
+	internal class GroupBySelectClauseRewriter : RelinqExpressionVisitor
 	{
 		public static Expression ReWrite(Expression expression, GroupResultOperator groupBy, QueryModel model)
 		{

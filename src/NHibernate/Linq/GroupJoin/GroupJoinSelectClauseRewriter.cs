@@ -7,7 +7,7 @@ using Remotion.Linq.Parsing;
 
 namespace NHibernate.Linq.GroupJoin
 {
-	public class GroupJoinSelectClauseRewriter : ExpressionTreeVisitor
+	public class GroupJoinSelectClauseRewriter : RelinqExpressionVisitor
 	{
 		private readonly IsAggregatingResults _results;
 

@@ -8,7 +8,7 @@ using Remotion.Linq.Parsing;
 
 namespace NHibernate.Linq.Visitors
 {
-	public class SelectClauseVisitor : ExpressionTreeVisitor
+	public class SelectClauseVisitor : RelinqExpressionVisitor
 	{
 		private readonly HqlTreeBuilder _hqlTreeBuilder = new HqlTreeBuilder();
 		private HashSet<Expression> _hqlNodes;

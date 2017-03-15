@@ -14,7 +14,7 @@ namespace NHibernate.Linq.Visitors
 	/// <summary>
 	/// Locates constants in the expression tree and generates parameters for each one
 	/// </summary>
-	public class ExpressionParameterVisitor : ExpressionTreeVisitor
+	public class ExpressionParameterVisitor : RelinqExpressionVisitor
 	{
 		private readonly Dictionary<ConstantExpression, NamedParameter> _parameters = new Dictionary<ConstantExpression, NamedParameter>();
 		private readonly ISessionFactoryImplementor _sessionFactory;

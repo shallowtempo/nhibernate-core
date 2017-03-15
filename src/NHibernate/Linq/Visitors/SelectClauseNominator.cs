@@ -12,7 +12,7 @@ namespace NHibernate.Linq.Visitors
 	/// Analyze the select clause to determine what parts can be translated
 	/// fully to HQL, and some other properties of the clause.
 	/// </summary>
-	class SelectClauseHqlNominator : ExpressionTreeVisitor
+	class SelectClauseHqlNominator : RelinqExpressionVisitor
 	{
 		private readonly ILinqToHqlGeneratorsRegistry _functionRegistry;
 

@@ -95,7 +95,7 @@ namespace NHibernate.Linq.ReWriters
 		}
 	}
 
-	internal class MergeAggregatingResultsInExpressionRewriter : ExpressionTreeVisitor
+	internal class MergeAggregatingResultsInExpressionRewriter : RelinqExpressionVisitor
 	{
 		private readonly NameGenerator _nameGenerator;
 

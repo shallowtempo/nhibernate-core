@@ -14,7 +14,7 @@ namespace NHibernate.Linq.Visitors
 	/// Replaces them with appropriate joins, maintaining reference equality between different clauses.
 	/// This allows extracted GroupBy key expression to also be replaced so that they can continue to match replaced Select expressions
 	/// </summary>
-	internal class MemberExpressionJoinDetector : ExpressionTreeVisitor
+	internal class MemberExpressionJoinDetector : RelinqExpressionVisitor
 	{
 		private readonly IIsEntityDecider _isEntityDecider;
 		private readonly IJoiner _joiner;
@@ -74,13 +74,13 @@ namespace NHibernate.Linq.Visitors
 			return expression;
 		}
 
-		protected override Expression VisitExtension(ExtensionExpression expression)
+		protected override Expression VisitExtension(Expression expression)
 		{
 			// Nominated expressions need to prevent joins on non-Identifier member expressions 
 			// (for the test expression of conditional expressions only)
 			// Otherwise an extra join is created and the GroupBy and Select clauses will not match
 			var old = _preventJoinsInConditionalTest;
-			_preventJoinsInConditionalTest = (NhExpressionType)expression.NodeType == NhExpressionType.Nominator;
+			_preventJoinsInConditionalTest = (NhExpressionType) expression.NodeType == NhExpressionType.Nominator;
 			var expr = base.VisitExtension(expression);
 			_preventJoinsInConditionalTest = old;
 			return expr;

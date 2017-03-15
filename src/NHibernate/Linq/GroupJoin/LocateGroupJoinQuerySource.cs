@@ -5,7 +5,7 @@ using Remotion.Linq.Parsing;
 
 namespace NHibernate.Linq.GroupJoin
 {
-	public class LocateGroupJoinQuerySource : ExpressionTreeVisitor
+	public class LocateGroupJoinQuerySource : RelinqExpressionVisitor
 	{
 		private readonly IsAggregatingResults _results;
 		private GroupJoinClause _groupJoin;

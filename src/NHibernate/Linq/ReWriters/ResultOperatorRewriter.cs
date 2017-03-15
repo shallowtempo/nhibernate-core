@@ -60,7 +60,7 @@ namespace NHibernate.Linq.ReWriters
 		/// <summary>
 		/// Rewrites expressions so that they sit in the outermost portion of the query.
 		/// </summary>
-		private class ResultOperatorExpressionRewriter : ExpressionTreeVisitor
+		private class ResultOperatorExpressionRewriter : RelinqExpressionVisitor
 		{
 			private static readonly System.Type[] rewrittenTypes = new[]
 				{

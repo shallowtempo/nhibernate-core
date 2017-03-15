@@ -72,7 +72,7 @@ namespace NHibernate.Linq.Visitors
 			return resultOperatorBase != null && _queryModel.ResultOperators.Contains(resultOperatorBase);
 		}
 
-		private class QuerySourceExtractor : ExpressionTreeVisitor
+		private class QuerySourceExtractor : RelinqExpressionVisitor
 		{
 			private IQuerySource _querySource;
 

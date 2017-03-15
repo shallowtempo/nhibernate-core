@@ -6,7 +6,7 @@ using Remotion.Linq.Parsing.ExpressionVisitors.TreeEvaluation;
 
 namespace NHibernate.Linq.Visitors
 {
-	internal class NhPartialEvaluatingExpressionTreeVisitor : ExpressionTreeVisitor, IPartialEvaluationExceptionExpressionVisitor
+	internal class NhPartialEvaluatingExpressionTreeVisitor : RelinqExpressionVisitor, IPartialEvaluationExceptionExpressionVisitor
 	{
 		protected override Expression VisitConstant(ConstantExpression expression)
 		{

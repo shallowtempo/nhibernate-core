@@ -5,7 +5,7 @@ using Remotion.Linq.Parsing;
 
 namespace NHibernate.Linq.NestedSelects
 {
-	class SelectClauseRewriter : ExpressionTreeVisitor
+	class SelectClauseRewriter : RelinqExpressionVisitor
 	{
 		private readonly Dictionary<Expression, Expression> _dictionary;
 

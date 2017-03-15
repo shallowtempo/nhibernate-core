@@ -4,7 +4,7 @@ using Remotion.Linq.Parsing;
 
 namespace NHibernate.Linq.GroupBy
 {
-	internal class KeySelectorVisitor : ExpressionTreeVisitor
+	internal class KeySelectorVisitor : RelinqExpressionVisitor
 	{
 		private readonly GroupResultOperator _groupBy;
 

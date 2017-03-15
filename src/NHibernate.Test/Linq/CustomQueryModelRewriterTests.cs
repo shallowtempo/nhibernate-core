@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
-using NHibernate.Linq;
 using NHibernate.Linq.Visitors;
 using NUnit.Framework;
 using Remotion.Linq;
@@ -48,7 +47,7 @@ namespace NHibernate.Test.Linq
 				whereClause.TransformExpressions(new Visitor().Visit);
 			}
 
-			private class Visitor : ExpressionTreeVisitor
+			private class Visitor : RelinqExpressionVisitor
 			{
 				protected override Expression VisitBinary(BinaryExpression expression)
 				{

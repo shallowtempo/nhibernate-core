@@ -18,7 +18,7 @@ namespace NHibernate.Linq.Visitors
 	/// generate the same key as 
 	///		from c in Customers where c.City = "Madrid"
 	/// </summary>
-	public class ExpressionKeyVisitor : ExpressionTreeVisitor
+	public class ExpressionKeyVisitor : RelinqExpressionVisitor
 	{
 		private readonly IDictionary<ConstantExpression, NamedParameter> _constantToParameterMap;
 		readonly StringBuilder _string = new StringBuilder();

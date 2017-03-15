@@ -12,7 +12,7 @@ namespace NHibernate.Linq.GroupBy
 	/// This class nominates sub-expression trees on the GroupBy Key expression
 	/// for inclusion in the Select clause.
 	/// </summary>
-	internal class GroupKeyNominator : ExpressionTreeVisitor
+	internal class GroupKeyNominator : RelinqExpressionVisitor
 	{
 		private GroupKeyNominator() { }
 
