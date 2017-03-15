@@ -7,7 +7,7 @@ using NHibernate.Impl;
 using NHibernate.Type;
 using NHibernate.Util;
 using Remotion.Linq;
-using Remotion.Linq.Parsing.ExpressionTreeVisitors;
+using Remotion.Linq.Parsing.ExpressionVisitors;
 
 namespace NHibernate.Linq
 {
@@ -117,9 +117,7 @@ namespace NHibernate.Linq
 
 			var provider = (INhQueryProvider) query.Provider;
 
-			var expression = ReplacingExpressionTreeVisitor.Replace(selector.Parameters.Single(),
-																	query.Expression,
-																	selector.Body);
+			var expression = ReplacingExpressionVisitor.Replace(selector.Parameters.Single(), query.Expression, selector.Body);
 
 			return (IFutureValue<TResult>) provider.ExecuteFuture(expression);
 		}
