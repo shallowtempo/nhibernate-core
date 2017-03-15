@@ -13,8 +13,9 @@ namespace NHibernate.Linq.Visitors
 		{
 		}
 
-		public virtual void VisitNhWithClause(NhWithClause withClause, QueryModel queryModel, int index)
+		public virtual void VisitNhWithClause(NhWithClause nhWhereClause, QueryModel queryModel, int index)
 		{
+			
 		}
 	}
 }

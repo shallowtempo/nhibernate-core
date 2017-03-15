@@ -6,7 +6,7 @@ using Remotion.Linq;
 
 namespace NHibernate.Linq.Clauses
 {
-	public class NhHavingClause : NhWhereClause
+	public class NhHavingClause : NhWhereClause, IBodyClause, IClause
 	{
 		public NhHavingClause(Expression predicate) 
 			: base(predicate)
@@ -17,9 +17,27 @@ namespace NHibernate.Linq.Clauses
 		{
 			return "having " + Predicate;
 		}
+
+		/// <summary>
+		/// Accepts the specified visitor by calling its <see cref="M:Remotion.Linq.IQueryModelVisitor.VisitWhereClause(Remotion.Linq.Clauses.WhereClause,Remotion.Linq.QueryModel,System.Int32)" /> method.
+		/// </summary>
+		/// <param name="visitor">The visitor to accept.</param>
+		/// <param name="queryModel">The query model in whose context this clause is visited.</param>
+		/// <param name="index">The index of this clause in the <paramref name="queryModel" />'s <see cref="P:Remotion.Linq.QueryModel.BodyClauses" /> collection.</param>
+		public override void Accept(IQueryModelVisitor visitor, QueryModel queryModel, int index)
+		{
+			if (visitor == null) throw new ArgumentNullException(nameof(visitor));
+			if (queryModel == null) throw new ArgumentNullException(nameof(queryModel));
+			((INhQueryModelVisitor) visitor).VisitNhHavingClause(this, queryModel, index);
+		}
+
+		IBodyClause IBodyClause.Clone(CloneContext cloneContext)
+		{
+			return Clone(cloneContext);
+		}
 	}
 
-	public class NhWhereClause : IBodyClause, IClause
+	public abstract class NhWhereClause
 	{
 		private Expression _predicate;
 
@@ -55,12 +73,7 @@ namespace NHibernate.Linq.Clauses
 		/// <param name="visitor">The visitor to accept.</param>
 		/// <param name="queryModel">The query model in whose context this clause is visited.</param>
 		/// <param name="index">The index of this clause in the <paramref name="queryModel" />'s <see cref="P:Remotion.Linq.QueryModel.BodyClauses" /> collection.</param>
-		public void Accept(IQueryModelVisitor visitor, QueryModel queryModel, int index)
-		{
-			if (visitor == null) throw new ArgumentNullException(nameof(visitor));
-			if (queryModel == null) throw new ArgumentNullException(nameof(queryModel));
-			((INhQueryModelVisitor)visitor).VisitNhWhereClause(this, queryModel, index);
-		}
+		public abstract void Accept(IQueryModelVisitor visitor, QueryModel queryModel, int index);
 
 		/// <summary>
 		/// Transforms all the expressions in this clause and its child objects via the given <paramref name="transformation" /> delegate.
@@ -80,11 +93,6 @@ namespace NHibernate.Linq.Clauses
 		{
 			if (cloneContext == null) throw new ArgumentNullException("cloneContext");
 			return new WhereClause(Predicate);
-		}
-
-		IBodyClause IBodyClause.Clone(CloneContext cloneContext)
-		{
-			return Clone(cloneContext);
 		}
 
 		public override string ToString()
