@@ -302,12 +302,6 @@ namespace NHibernate.Linq.Visitors
 		{
 			var querySourceName = VisitorParameters.QuerySourceNamer.GetName(fromClause);
 
-			//var joinClause = fromClause as NhJoinClause;
-			//if (joinClause != null)
-			//{
-			//	VisitNhJoinClause(querySourceName, joinClause);
-			//}
-			//else
 			if (fromClause.FromExpression is MemberExpression)
 			{
 				// It's a join
@@ -329,19 +323,21 @@ namespace NHibernate.Linq.Visitors
 			base.VisitAdditionalFromClause(fromClause, queryModel, index);
 		}
 
-		private void VisitNhJoinClause(string querySourceName, NhJoinClause joinClause)
+		public override void VisitNhJoinClause(NhJoinClause joinClause, QueryModel queryModel, int index)
 		{
+			var querySourceName = VisitorParameters.QuerySourceNamer.GetName(joinClause);
+
 			var expression = HqlGeneratorExpressionVisitor.Visit(joinClause.FromExpression, VisitorParameters).AsExpression();
 			var alias = _hqlTree.TreeBuilder.Alias(querySourceName);
 
 			HqlTreeNode hqlJoin;
 			if (joinClause.IsInner)
 			{
-				hqlJoin = _hqlTree.TreeBuilder.Join(expression, @alias);
+				hqlJoin = _hqlTree.TreeBuilder.Join(expression, alias);
 			}
 			else
 			{
-				hqlJoin = _hqlTree.TreeBuilder.LeftJoin(expression, @alias);
+				hqlJoin = _hqlTree.TreeBuilder.LeftJoin(expression, alias);
 			}
 
 			foreach (var withClause in joinClause.Restrictions)
@@ -448,13 +444,6 @@ namespace NHibernate.Linq.Visitors
 			// Visit the predicate to build the query
 			var expression = HqlGeneratorExpressionVisitor.Visit(withClause.Predicate, VisitorParameters).ToBooleanExpression();
 			_hqlTree.AddWhereClause(expression);
-		}
-
-		public override void VisitNhJoinClause(NhJoinClause joinClause, QueryModel queryModel, int index)
-		{
-			var querySourceName = VisitorParameters.QuerySourceNamer.GetName(joinClause);
-
-			VisitNhJoinClause(querySourceName, joinClause);
 		}
 	}
 }
