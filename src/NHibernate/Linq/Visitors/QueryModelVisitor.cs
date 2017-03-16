@@ -398,14 +398,7 @@ namespace NHibernate.Linq.Visitors
 
 			// Visit the predicate to build the query
 			var expression = HqlGeneratorExpressionVisitor.Visit(whereClause.Predicate, VisitorParameters).ToBooleanExpression();
-			if (whereClause is NhHavingClause)
-			{
-				_hqlTree.AddHavingClause(expression);
-			}
-			else
-			{
-				_hqlTree.AddWhereClause(expression);
-			}
+			_hqlTree.AddWhereClause(expression);
 		}
 
 		public override void VisitOrderByClause(OrderByClause orderByClause, QueryModel queryModel, int index)
@@ -443,7 +436,7 @@ namespace NHibernate.Linq.Visitors
 			havingClause.Predicate = visitor.Visit(havingClause.Predicate);
 
 			// Visit the predicate to build the query
-			var expression = HqlGeneratorExpressionVisitor.Visit(havingClause.Predicate, VisitorParameters).AsBooleanExpression();
+			var expression = HqlGeneratorExpressionVisitor.Visit(havingClause.Predicate, VisitorParameters).ToBooleanExpression();
 			_hqlTree.AddHavingClause(expression);
 		}
 
@@ -453,7 +446,7 @@ namespace NHibernate.Linq.Visitors
 			withClause.Predicate = visitor.Visit(withClause.Predicate);
 
 			// Visit the predicate to build the query
-			var expression = HqlGeneratorExpressionVisitor.Visit(withClause.Predicate, VisitorParameters).AsBooleanExpression();
+			var expression = HqlGeneratorExpressionVisitor.Visit(withClause.Predicate, VisitorParameters).ToBooleanExpression();
 			_hqlTree.AddWhereClause(expression);
 		}
 

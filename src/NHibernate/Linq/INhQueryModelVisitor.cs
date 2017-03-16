@@ -1,6 +1,7 @@
+using NHibernate.Linq.Clauses;
 using Remotion.Linq;
 
-namespace NHibernate.Linq.Clauses
+namespace NHibernate.Linq
 {
 	public interface INhQueryModelVisitor: IQueryModelVisitor
 	{
