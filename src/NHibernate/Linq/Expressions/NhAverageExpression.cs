@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using NHibernate.Linq.Visitors;
 using NHibernate.Util;
 
 namespace NHibernate.Linq.Expressions
@@ -38,6 +39,11 @@ namespace NHibernate.Linq.Expressions
 		public override Expression CreateNew(Expression expression)
 		{
 			return new NhAverageExpression(expression);
+		}
+
+		protected override Expression Accept(NhExpressionVisitor visitor)
+		{
+			return visitor.VisitNhAverage(this);
 		}
 	}
 }

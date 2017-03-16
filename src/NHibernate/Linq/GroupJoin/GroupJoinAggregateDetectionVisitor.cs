@@ -38,7 +38,7 @@ namespace NHibernate.Linq.GroupJoin
 			return expression;
 		}
 
-		protected override Expression VisitNhAggregate(NhAggregatedExpression expression)
+		protected internal override Expression VisitNhAggregate(NhAggregatedExpression expression)
 		{
 			using (_inAggregate.SetFlag())
 			{

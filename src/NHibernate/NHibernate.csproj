@@ -151,6 +151,7 @@
     <Compile Include="Connection\IConnectionProvider.cs" />
     <Compile Include="Connection\UserSuppliedConnectionProvider.cs" />
     <Compile Include="Linq\Clauses\INhQueryModelVisitor.cs" />
+    <Compile Include="Linq\Expressions\NhExpression.cs" />
     <Compile Include="Linq\Expressions\NhStarExpression.cs" />
     <Compile Include="Dialect\PostgreSQL83Dialect.cs" />
     <Compile Include="Tool\hbm2ddl\IDatabaseMetadata.cs" />

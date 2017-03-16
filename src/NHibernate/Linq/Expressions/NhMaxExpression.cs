@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using NHibernate.Linq.Visitors;
 
 namespace NHibernate.Linq.Expressions
 {
@@ -12,6 +13,11 @@ namespace NHibernate.Linq.Expressions
 		public override Expression CreateNew(Expression expression)
 		{
 			return new NhMaxExpression(expression);
+		}
+
+		protected override Expression Accept(NhExpressionVisitor visitor)
+		{
+			return visitor.VisitNhMax(this);
 		}
 	}
 }

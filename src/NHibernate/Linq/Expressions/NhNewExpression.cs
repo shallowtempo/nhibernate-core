@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq.Expressions;
+using NHibernate.Linq.Visitors;
 
 namespace NHibernate.Linq.Expressions
 {
-	public class NhNewExpression : Expression
+	public class NhNewExpression : NhExpression
 	{
 		public NhNewExpression(IList<string> members, IList<Expression> arguments)
 		{
@@ -27,6 +28,11 @@ namespace NHibernate.Linq.Expressions
 			return arguments != Arguments
 				? new NhNewExpression(Members, arguments)
 				: this;
+		}
+
+		protected override Expression Accept(NhExpressionVisitor visitor)
+		{
+			return visitor.VisitNhNew(this);
 		}
 	}
 }

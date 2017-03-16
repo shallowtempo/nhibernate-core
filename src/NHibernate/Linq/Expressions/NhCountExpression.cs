@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using NHibernate.Linq.Visitors;
 
 namespace NHibernate.Linq.Expressions
 {
@@ -6,6 +7,11 @@ namespace NHibernate.Linq.Expressions
 	{
 		protected NhCountExpression(Expression expression, System.Type type)
 			: base(expression, type, NhExpressionType.Count) {}
+
+		protected override Expression Accept(NhExpressionVisitor visitor)
+		{
+			return visitor.VisitNhCount(this);
+		}
 	}
 
 	public class NhShortCountExpression : NhCountExpression

@@ -1,8 +1,9 @@
 using System.Linq.Expressions;
+using NHibernate.Linq.Visitors;
 
 namespace NHibernate.Linq.Expressions
 {
-	public class NhStarExpression : Expression
+	public class NhStarExpression : NhExpression
 	{
 		public NhStarExpression(Expression expression)
 		{
@@ -22,6 +23,11 @@ namespace NHibernate.Linq.Expressions
 			return newExpression != Expression
 				? new NhStarExpression(newExpression)
 				: this;
+		}
+
+		protected override Expression Accept(NhExpressionVisitor visitor)
+		{
+			return visitor.VisitNhStar(this);
 		}
 	}
 }

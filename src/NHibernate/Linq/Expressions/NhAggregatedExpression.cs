@@ -1,8 +1,9 @@
 ﻿using System.Linq.Expressions;
+using NHibernate.Linq.Visitors;
 
 namespace NHibernate.Linq.Expressions
 {
-	public abstract class NhAggregatedExpression : Expression
+	public abstract class NhAggregatedExpression : NhExpression
 	{
 		protected NhAggregatedExpression(Expression expression, NhExpressionType nodeType)
 			: this(expression, expression.Type, nodeType)
@@ -32,5 +33,10 @@ namespace NHibernate.Linq.Expressions
 		}
 
 		public abstract Expression CreateNew(Expression expression);
+
+		protected override Expression Accept(NhExpressionVisitor visitor)
+		{
+			return visitor.VisitNhAggregate(this);
+		}
 	}
 }

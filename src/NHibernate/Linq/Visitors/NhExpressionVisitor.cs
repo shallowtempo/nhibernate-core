@@ -14,7 +14,7 @@ namespace NHibernate.Linq.Visitors
 				return null;
 			}
 
-			switch ((NhExpressionType)expression.NodeType)
+			switch ((NhExpressionType) expression.NodeType)
 			{
 				case NhExpressionType.Average:
 				case NhExpressionType.Min:
@@ -22,7 +22,7 @@ namespace NHibernate.Linq.Visitors
 				case NhExpressionType.Sum:
 				case NhExpressionType.Count:
 				case NhExpressionType.Distinct:
-					return VisitNhAggregate((NhAggregatedExpression)expression);
+					return VisitNhAggregate((NhAggregatedExpression) expression);
 				case NhExpressionType.New:
 					return VisitNhNew((NhNewExpression)expression);
 				case NhExpressionType.Star:
@@ -34,17 +34,17 @@ namespace NHibernate.Linq.Visitors
 			return expr;
 		}
 
-		protected virtual Expression VisitNhStar(NhStarExpression expression)
+		protected internal virtual Expression VisitNhStar(NhStarExpression expression)
 		{
-			return VisitExtension(expression);
+			return expression;
 		}
 
-		protected virtual Expression VisitNhNew(NhNewExpression expression)
+		protected internal virtual Expression VisitNhNew(NhNewExpression expression)
 		{
-			return VisitExtension(expression);
+			return expression;
 		}
 
-		protected virtual Expression VisitNhAggregate(NhAggregatedExpression expression)
+		protected internal virtual Expression VisitNhAggregate(NhAggregatedExpression expression)
 		{
 			switch ((NhExpressionType)expression.NodeType)
 			{
@@ -65,34 +65,34 @@ namespace NHibernate.Linq.Visitors
 			}
 		}
 
-		protected virtual Expression VisitNhDistinct(NhDistinctExpression expression)
+		protected internal virtual Expression VisitNhDistinct(NhDistinctExpression expression)
 		{
-			return VisitExtension(expression);
+			return expression;
 		}
 
-		protected virtual Expression VisitNhCount(NhCountExpression expression)
+		protected internal virtual Expression VisitNhCount(NhCountExpression expression)
 		{
-			return VisitExtension(expression);
+			return expression;
 		}
 
-		protected virtual Expression VisitNhSum(NhSumExpression expression)
+		protected internal virtual Expression VisitNhSum(NhSumExpression expression)
 		{
-			return VisitExtension(expression);
+			return expression;
 		}
 
-		protected virtual Expression VisitNhMax(NhMaxExpression expression)
+		protected internal virtual Expression VisitNhMax(NhMaxExpression expression)
 		{
-			return VisitExtension(expression);
+			return expression;
 		}
 
-		protected virtual Expression VisitNhMin(NhMinExpression expression)
+		protected internal virtual Expression VisitNhMin(NhMinExpression expression)
 		{
-			return this.VisitExtension(expression);
+			return expression;
 		}
 
-		protected virtual Expression VisitNhAverage(NhAverageExpression expression)
+		protected internal virtual Expression VisitNhAverage(NhAverageExpression expression)
 		{
-			return this.VisitExtension(expression);
+			return expression;
 		}
 	}
 }
