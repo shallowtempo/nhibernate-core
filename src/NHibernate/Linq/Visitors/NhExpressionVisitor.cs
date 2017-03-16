@@ -36,12 +36,12 @@ namespace NHibernate.Linq.Visitors
 
 		protected internal virtual Expression VisitNhStar(NhStarExpression expression)
 		{
-			return expression;
+			return VisitExtension(expression);
 		}
 
 		protected internal virtual Expression VisitNhNew(NhNewExpression expression)
 		{
-			return expression;
+			return VisitExtension(expression);
 		}
 
 		protected internal virtual Expression VisitNhAggregate(NhAggregatedExpression expression)
@@ -67,32 +67,32 @@ namespace NHibernate.Linq.Visitors
 
 		protected internal virtual Expression VisitNhDistinct(NhDistinctExpression expression)
 		{
-			return expression;
+			return VisitExtension(expression);
 		}
 
 		protected internal virtual Expression VisitNhCount(NhCountExpression expression)
 		{
-			return expression;
+			return VisitExtension(expression);
 		}
 
 		protected internal virtual Expression VisitNhSum(NhSumExpression expression)
 		{
-			return expression;
+			return VisitExtension(expression);
 		}
 
 		protected internal virtual Expression VisitNhMax(NhMaxExpression expression)
 		{
-			return expression;
+			return VisitExtension(expression);
 		}
 
 		protected internal virtual Expression VisitNhMin(NhMinExpression expression)
 		{
-			return expression;
+			return VisitExtension(expression);
 		}
 
 		protected internal virtual Expression VisitNhAverage(NhAverageExpression expression)
 		{
-			return expression;
+			return VisitExtension(expression);
 		}
 	}
 }
