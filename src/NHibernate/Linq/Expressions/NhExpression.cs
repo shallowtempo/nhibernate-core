@@ -5,6 +5,8 @@ namespace NHibernate.Linq.Expressions
 {
 	public abstract class NhExpression : Expression
 	{
+		public sealed override ExpressionType NodeType => ExpressionType.Extension;
+
 		protected sealed override Expression Accept(ExpressionVisitor visitor)
 		{
 			var nhVisitor = visitor as NhExpressionVisitor;

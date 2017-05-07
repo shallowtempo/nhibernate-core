@@ -53,10 +53,10 @@ namespace NHibernate.Linq.Visitors
 			if (expression == null)
 				return null;
 
-			if (expression.NodeType == (ExpressionType)NhExpressionType.Nominator)
+			if (expression is NhNominatedExpression nominatedExpression)
 			{
 				// Add the nominated clause and strip the nominator wrapper from the select expression
-				var innerExpression = ((NhNominatedExpression)expression).Expression;
+				var innerExpression = nominatedExpression.Expression;
 				HqlCandidates.Add(innerExpression);
 				return innerExpression;
 			}
@@ -121,11 +121,11 @@ namespace NHibernate.Linq.Visitors
 						   methodCallExpression.Object.NodeType != ExpressionType.Constant; // does not belong to parameter 
 				}
 			}
-			else if (expression.NodeType == (ExpressionType)NhExpressionType.Sum ||
-						expression.NodeType == (ExpressionType)NhExpressionType.Count ||
-						expression.NodeType == (ExpressionType)NhExpressionType.Average ||
-						expression.NodeType == (ExpressionType)NhExpressionType.Max ||
-						expression.NodeType == (ExpressionType)NhExpressionType.Min)
+			else if (expression is NhSumExpression ||
+			         expression is NhCountExpression ||
+			         expression is NhAverageExpression ||
+			         expression is NhMaxExpression ||
+			         expression is NhMinExpression)
 			{
 				return true;
 			}
@@ -172,7 +172,7 @@ namespace NHibernate.Linq.Visitors
 
 		private static bool CanBeEvaluatedInHqlStatementShortcut(Expression expression)
 		{
-			return ((NhExpressionType)expression.NodeType) == NhExpressionType.Count;
+			return expression is NhCountExpression;
 		}
 	}
 }

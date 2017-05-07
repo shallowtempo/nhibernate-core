@@ -106,44 +106,42 @@ namespace NHibernate.Linq.Visitors
 				case ExpressionType.TypeIs:
 					return VisitTypeBinaryExpression((TypeBinaryExpression) expression);
 
-				default:
-					var subQueryExpression = expression as SubQueryExpression;
-					if (subQueryExpression != null)
-						return VisitSubQueryExpression(subQueryExpression);
-
-					var querySourceReferenceExpression = expression as QuerySourceReferenceExpression;
-					if (querySourceReferenceExpression != null)
-						return VisitQuerySourceReferenceExpression(querySourceReferenceExpression);
-
-					var vbStringComparisonExpression = expression as VBStringComparisonExpression;
-					if (vbStringComparisonExpression != null)
-						return VisitVBStringComparisonExpression(vbStringComparisonExpression);
-
-					switch ((NhExpressionType) expression.NodeType)
+				case ExpressionType.Extension:
+					switch (expression)
 					{
-						case NhExpressionType.Average:
-							return VisitNhAverage((NhAverageExpression) expression);
-						case NhExpressionType.Min:
-							return VisitNhMin((NhMinExpression) expression);
-						case NhExpressionType.Max:
-							return VisitNhMax((NhMaxExpression) expression);
-						case NhExpressionType.Sum:
-							return VisitNhSum((NhSumExpression) expression);
-						case NhExpressionType.Count:
-							return VisitNhCount((NhCountExpression) expression);
-						case NhExpressionType.Distinct:
-							return VisitNhDistinct((NhDistinctExpression) expression);
-						case NhExpressionType.Star:
-							return VisitNhStar((NhStarExpression) expression);
-						case NhExpressionType.Nominator:
-							return VisitExpression(((NhNominatedExpression) expression).Expression);
-							//case NhExpressionType.New:
-							//    return VisitNhNew((NhNewExpression)expression);
+						case SubQueryExpression subQueryExpression:
+							return VisitSubQueryExpression(subQueryExpression);
+						case QuerySourceReferenceExpression querySourceReferenceExpression:
+							return VisitQuerySourceReferenceExpression(querySourceReferenceExpression);
+						case VBStringComparisonExpression vbStringComparisonExpression:
+							return VisitVBStringComparisonExpression(vbStringComparisonExpression);
+						case NhAverageExpression nhAverageExpression:
+							return VisitNhAverage(nhAverageExpression);
+						case NhMinExpression nhMinExpression:
+							return VisitNhMin(nhMinExpression);
+						case NhMaxExpression nhMaxExpression:
+							return VisitNhMax(nhMaxExpression);
+						case NhSumExpression nhSumExpression:
+							return VisitNhSum(nhSumExpression);
+						case NhCountExpression nhCountExpression:
+							return VisitNhCount(nhCountExpression);
+						case NhDistinctExpression nhDistinctExpression:
+							return VisitNhDistinct(nhDistinctExpression);
+						case NhStarExpression nhStarExpression:
+							return VisitNhStar(nhStarExpression);
+						case NhNominatedExpression nhNominatedExpression:
+							return VisitNhNominated(nhNominatedExpression);
+						//case NhNewExpression nhNewExpression:
+						//	return VisitNhNew(nhNewExpression);
+						default:
+							throw new NotSupportedException(expression.ToString());
 					}
 
-					throw new NotSupportedException(expression.ToString());
+				default:
+					throw new NotSupportedException(expression.NodeType.ToString());
 			}
 		}
+
 
 		private HqlTreeNode VisitTypeBinaryExpression(TypeBinaryExpression expression)
 		{
@@ -200,6 +198,11 @@ possible solutions:
 		protected HqlTreeNode VisitNhStar(NhStarExpression expression)
 		{
 			return _hqlTreeBuilder.Star();
+		}
+
+		private HqlTreeNode VisitNhNominated(NhNominatedExpression nhNominatedExpression)
+		{
+			return VisitExpression(nhNominatedExpression.Expression);
 		}
 
 		private HqlTreeNode VisitInvocationExpression(InvocationExpression expression)

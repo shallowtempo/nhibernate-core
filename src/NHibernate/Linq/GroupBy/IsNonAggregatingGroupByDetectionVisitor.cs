@@ -28,7 +28,7 @@ namespace NHibernate.Linq.GroupBy
 					   : base.VisitMember(expression);
 		}
 
-		protected internal override Expression VisitNhAggregate(NhAggregatedExpression expression)
+		protected internal override Expression VisitNhAggregated(NhAggregatedExpression expression)
 		{
 			return expression;
 		}

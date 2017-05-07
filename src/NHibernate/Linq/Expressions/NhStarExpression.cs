@@ -12,8 +12,6 @@ namespace NHibernate.Linq.Expressions
 
 		public Expression Expression { get; }
 
-		public override ExpressionType NodeType => (ExpressionType) NhExpressionType.Star;
-
 		public override System.Type Type => Expression.Type;
 
 		protected override Expression VisitChildren(ExpressionVisitor visitor)

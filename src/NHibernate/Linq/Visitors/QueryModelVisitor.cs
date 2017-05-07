@@ -152,23 +152,23 @@ namespace NHibernate.Linq.Visitors
 			if (_rootReturnType == NhLinqExpressionReturnType.Scalar && Model.ResultTypeOverride != null)
 			{
 				// NH-3850: handle polymorphic scalar results aggregation
-				switch ((NhExpressionType)Model.SelectClause.Selector.NodeType)
+				switch (Model.SelectClause.Selector)
 				{
-					case NhExpressionType.Average:
+					case NhAverageExpression _:
 						// Polymorphic case complex to handle and not implemented. (HQL query must be reshaped for adding
 						// additional data to allow a meaningful overall average computation.)
 						// Leaving it untouched for allowing non polymorphic cases to work.
 						break;
-					case NhExpressionType.Count:
+					case NhCountExpression _:
 						AddPostExecuteTransformerForCount();
 						break;
-					case NhExpressionType.Max:
+					case NhMaxExpression _:
 						AddPostExecuteTransformerForResultAggregate(ReflectionCache.EnumerableMethods.MaxDefinition);
 						break;
-					case NhExpressionType.Min:
+					case NhMinExpression _:
 						AddPostExecuteTransformerForResultAggregate(ReflectionCache.EnumerableMethods.MinDefinition);
 						break;
-					case NhExpressionType.Sum:
+					case NhSumExpression _:
 						AddPostExecuteTransformerForSum();
 						break;
 				}

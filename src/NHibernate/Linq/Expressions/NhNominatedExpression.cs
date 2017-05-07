@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using NHibernate.Linq.Visitors;
 
 namespace NHibernate.Linq.Expressions
 {
@@ -11,18 +12,21 @@ namespace NHibernate.Linq.Expressions
 	///     Used in the nomination of GroupBy key expressions to ensure that matching select clauses
 	///     are generated the same way.
 	/// </remarks>
-	class NhNominatedExpression : Expression
+	public class NhNominatedExpression : NhExpression
 	{
 		public NhNominatedExpression(Expression expression)
 		{
 			Expression = expression;
 		}
 
-		public override ExpressionType NodeType => (ExpressionType) NhExpressionType.Nominator;
-
 		public override System.Type Type => Expression.Type;
 
 		public Expression Expression { get; }
+
+		protected override Expression Accept(NhExpressionVisitor visitor)
+		{
+			return visitor.VisitNhNominated(this);
+		}
 
 		protected override Expression VisitChildren(ExpressionVisitor visitor)
 		{

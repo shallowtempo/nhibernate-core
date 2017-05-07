@@ -993,7 +993,6 @@
     <Compile Include="Linq\Expressions\NhAverageExpression.cs" />
     <Compile Include="Linq\Expressions\NhCountExpression.cs" />
     <Compile Include="Linq\Expressions\NhDistinctExpression.cs" />
-    <Compile Include="Linq\Expressions\NhExpressionType.cs" />
     <Compile Include="Linq\Expressions\NhMaxExpression.cs" />
     <Compile Include="Linq\Expressions\NhMinExpression.cs" />
     <Compile Include="Linq\Expressions\NhSumExpression.cs" />

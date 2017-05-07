@@ -5,21 +5,18 @@ namespace NHibernate.Linq.Expressions
 {
 	public abstract class NhAggregatedExpression : NhExpression
 	{
-		protected NhAggregatedExpression(Expression expression, NhExpressionType nodeType)
-			: this(expression, expression.Type, nodeType)
+		protected NhAggregatedExpression(Expression expression)
+			: this(expression, expression.Type)
 		{
 		}
 
-		protected NhAggregatedExpression(Expression expression, System.Type type, NhExpressionType nodeType)
+		protected NhAggregatedExpression(Expression expression, System.Type type)
 		{
 			Expression = expression;
-			NodeType = (ExpressionType) nodeType;
 			Type = type;
 		}
 
-		public override ExpressionType NodeType { get; }
-
-		public override System.Type Type { get; }
+		public sealed override System.Type Type { get; }
 
 		public Expression Expression { get; }
 
@@ -36,7 +33,7 @@ namespace NHibernate.Linq.Expressions
 
 		protected override Expression Accept(NhExpressionVisitor visitor)
 		{
-			return visitor.VisitNhAggregate(this);
+			return visitor.VisitNhAggregated(this);
 		}
 	}
 }

@@ -80,7 +80,7 @@ namespace NHibernate.Linq.Visitors
 			// (for the test expression of conditional expressions only)
 			// Otherwise an extra join is created and the GroupBy and Select clauses will not match
 			var old = _preventJoinsInConditionalTest;
-			_preventJoinsInConditionalTest = (NhExpressionType) expression.NodeType == NhExpressionType.Nominator;
+			_preventJoinsInConditionalTest = expression is NhNominatedExpression;
 			var expr = base.VisitExtension(expression);
 			_preventJoinsInConditionalTest = old;
 			return expr;

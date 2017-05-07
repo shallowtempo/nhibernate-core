@@ -126,15 +126,16 @@ namespace NHibernate.Linq.GroupBy
 			if (expression.QueryModel.MainFromClause.FromExpression.Type == _groupBy.ItemType)
 			{
 				var where = expression.QueryModel.BodyClauses.OfType<WhereClause>().FirstOrDefault();
-				NhCountExpression countExpression;
-				if (where != null && (countExpression = expression.QueryModel.SelectClause.Selector as NhCountExpression) !=
-				null && countExpression.Expression.NodeType == (ExpressionType)NhExpressionType.Star)
+				if (@where != null &&
+				    expression.QueryModel.SelectClause.Selector is NhCountExpression countExpression &&
+				    countExpression.Expression is NhStarExpression)
 				{
-					//return it as a CASE [column] WHEN [predicate] THEN 1 ELSE NULL END
 					return
-							countExpression.CreateNew(Expression.Condition(where.Predicate, Expression.Constant(1, typeof(int?)),
+						countExpression.CreateNew(
+							Expression.Condition(
+								where.Predicate,
+								Expression.Constant(1, typeof(int?)),
 								Expression.Constant(null, typeof(int?))));
-
 				}
 			}
 

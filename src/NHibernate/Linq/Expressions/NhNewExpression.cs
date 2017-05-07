@@ -15,8 +15,6 @@ namespace NHibernate.Linq.Expressions
 
 		public override System.Type Type => typeof(object);
 
-		public override ExpressionType NodeType => (ExpressionType) NhExpressionType.New;
-
 		public ReadOnlyCollection<Expression> Arguments { get; }
 
 		public ReadOnlyCollection<string> Members { get; }
