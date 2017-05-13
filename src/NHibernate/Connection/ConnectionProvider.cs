@@ -50,7 +50,9 @@ namespace NHibernate.Connection
 
 			// Connection string in the configuration overrides named connection string
 			if (!settings.TryGetValue(Environment.ConnectionString, out connString))
+			{
 				connString = GetNamedConnectionString(settings);
+			}
 
 			if (connString == null)
 			{
