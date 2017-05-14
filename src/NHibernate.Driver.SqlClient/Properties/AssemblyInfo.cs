@@ -4,7 +4,7 @@ using System.Security;
 
 [assembly: CLSCompliantAttribute(true)]
 [assembly: AssemblyTitleAttribute("NHibernate.Driver.SqlClient")]
-[assembly: AssemblyDescriptionAttribute("An object persistence library for relational databases.")]
+[assembly: AssemblyDescriptionAttribute("Driver for Microsoft SQL Server to be used with NHibernate 5.")]
 [assembly: AssemblyCompanyAttribute("NHibernate.info")]
 [assembly: AssemblyProductAttribute("NHibernate.Driver.SqlClient")]
 [assembly: AssemblyCopyrightAttribute("Licensed under LGPL.")]
