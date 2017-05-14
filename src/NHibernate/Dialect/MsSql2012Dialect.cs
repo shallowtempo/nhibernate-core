@@ -59,10 +59,10 @@ namespace NHibernate.Dialect
 		public override SqlString GetLimitString(SqlString querySqlString, SqlString offset, SqlString limit)
 		{
 			var tokenEnum = new SqlTokenizer(querySqlString).GetEnumerator();
-			if (!tokenEnum.TryParseUntilFirstMsSqlSelectColumn()) return null;
+			if (!SqlTokenizerExtensions.TryParseUntilFirstMsSqlSelectColumn(tokenEnum)) return null;
 
 			var result = new SqlStringBuilder(querySqlString);
-			if (!tokenEnum.TryParseUntil("order"))
+			if (!SqlTokenizerExtensions.TryParseUntil(tokenEnum, "order"))
 			{
 				result.Add(" ORDER BY CURRENT_TIMESTAMP");
 			}
