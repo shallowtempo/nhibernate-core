@@ -29,6 +29,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Drivers", "Drivers", "{C1E3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NHibernate.DomainModel", "NHibernate.DomainModel\NHibernate.DomainModel.csproj", "{A0F5C952-D4F9-4A3F-814C-0E77E648FF0F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NHibernate.Test", "NHibernate.Test\NHibernate.Test.csproj", "{EF4044DA-DEC6-4A2A-8D12-B15F8EAB5847}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NHibernate.TestDatabaseSetup", "NHibernate.TestDatabaseSetup\NHibernate.TestDatabaseSetup.csproj", "{A593928E-4D00-4217-B80D-2BA0D3EEEC7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +87,14 @@ Global
 		{A0F5C952-D4F9-4A3F-814C-0E77E648FF0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0F5C952-D4F9-4A3F-814C-0E77E648FF0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0F5C952-D4F9-4A3F-814C-0E77E648FF0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF4044DA-DEC6-4A2A-8D12-B15F8EAB5847}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF4044DA-DEC6-4A2A-8D12-B15F8EAB5847}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF4044DA-DEC6-4A2A-8D12-B15F8EAB5847}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF4044DA-DEC6-4A2A-8D12-B15F8EAB5847}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A593928E-4D00-4217-B80D-2BA0D3EEEC7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A593928E-4D00-4217-B80D-2BA0D3EEEC7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A593928E-4D00-4217-B80D-2BA0D3EEEC7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A593928E-4D00-4217-B80D-2BA0D3EEEC7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

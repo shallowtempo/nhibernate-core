@@ -179,10 +179,15 @@ namespace NHibernate.Test.SystemTransactions
 				}
 			}
 
-			// Transaction completion may happen asynchronously, so allow some delay.
+            // Transaction completion may happen asynchronously, so allow some delay.
+#if NETCOREAPP2_0
+			// TODO: this is only temporary till the next version of NUnit (after 3.6.1)
+			Assert.That(() => s1.IsOpen, Is.False);
+#else
 			Assert.That(() => s1.IsOpen, Is.False.After(500, 100));
+#endif
 
-			Assert.That(interceptor.afterTransactionCompletionCalled, Is.EqualTo(1));
+            Assert.That(interceptor.afterTransactionCompletionCalled, Is.EqualTo(1));
 		}
 
 	}

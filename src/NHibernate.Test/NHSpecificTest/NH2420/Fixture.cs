@@ -65,10 +65,16 @@ namespace NHibernate.Test.NHSpecificTest.NH2420
 					EnlistmentOptions.None);
 
 				DbConnection connection;
+#if !NETCOREAPP2_0
 				if (sessions.ConnectionProvider.Driver.GetType() == typeof(OdbcDriver))
+				{
 					connection = new OdbcConnection(connectionString);
+				}
 				else
+#endif
+				{
 					connection = new SqlConnection(connectionString);
+				}
 
 				using (connection)
 				{

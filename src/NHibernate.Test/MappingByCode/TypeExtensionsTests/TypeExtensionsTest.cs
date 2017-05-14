@@ -52,11 +52,11 @@ namespace NHibernate.Test.MappingByCode.TypeExtensionsTests
 		[Test]
 		public void DecodeMemberAccessExpressionShouldReturnMemberOfDeclaringClass()
 		{
-			var mi1 = TypeExtensions.DecodeMemberAccessExpression<MyClass>(mc => mc.BaseProperty);
+			var mi1 = Mapping.ByCode.TypeExtensions.DecodeMemberAccessExpression<MyClass>(mc => mc.BaseProperty);
 			Assert.That(mi1.DeclaringType, Is.EqualTo(typeof (MyBaseClass)));
 			Assert.That(mi1.ReflectedType, Is.EqualTo(typeof (MyBaseClass)));
 
-			var mi2 = TypeExtensions.DecodeMemberAccessExpression<MyClass>(mc => mc.BaseBool);
+			var mi2 = Mapping.ByCode.TypeExtensions.DecodeMemberAccessExpression<MyClass>(mc => mc.BaseBool);
 			Assert.That(mi2.DeclaringType, Is.EqualTo(typeof(MyBaseClass)));
 			Assert.That(mi2.ReflectedType, Is.EqualTo(typeof(MyBaseClass)));
 		}
@@ -64,11 +64,11 @@ namespace NHibernate.Test.MappingByCode.TypeExtensionsTests
 		[Test]
 		public void GenericDecodeMemberAccessExpressionShouldReturnMemberOfDeclaringClass()
 		{
-			var mi1 = TypeExtensions.DecodeMemberAccessExpression<MyClass, string>(mc => mc.BaseProperty);
+			var mi1 = Mapping.ByCode.TypeExtensions.DecodeMemberAccessExpression<MyClass, string>(mc => mc.BaseProperty);
 			Assert.That(mi1.DeclaringType, Is.EqualTo(typeof(MyBaseClass)));
 			Assert.That(mi1.ReflectedType, Is.EqualTo(typeof(MyBaseClass)));
 
-			var mi2 = TypeExtensions.DecodeMemberAccessExpression<MyClass, bool>(mc => mc.BaseBool);
+			var mi2 = Mapping.ByCode.TypeExtensions.DecodeMemberAccessExpression<MyClass, bool>(mc => mc.BaseBool);
 			Assert.That(mi2.DeclaringType, Is.EqualTo(typeof(MyBaseClass)));
 			Assert.That(mi2.ReflectedType, Is.EqualTo(typeof(MyBaseClass)));
 		}
@@ -76,11 +76,11 @@ namespace NHibernate.Test.MappingByCode.TypeExtensionsTests
 		[Test]
 		public void DecodeMemberAccessExpressionOfShouldReturnMemberOfRequiredClass()
 		{
-			var mi1 = TypeExtensions.DecodeMemberAccessExpressionOf<MyClass>(mc => mc.BaseProperty);
+			var mi1 = Mapping.ByCode.TypeExtensions.DecodeMemberAccessExpressionOf<MyClass>(mc => mc.BaseProperty);
 			Assert.That(mi1.DeclaringType, Is.EqualTo(typeof (MyBaseClass)));
 			Assert.That(mi1.ReflectedType, Is.EqualTo(typeof (MyClass)));
 
-			var mi2 = TypeExtensions.DecodeMemberAccessExpressionOf<MyClass>(mc => mc.BaseBool);
+			var mi2 = Mapping.ByCode.TypeExtensions.DecodeMemberAccessExpressionOf<MyClass>(mc => mc.BaseBool);
 			Assert.That(mi2.DeclaringType, Is.EqualTo(typeof(MyBaseClass)));
 			Assert.That(mi2.ReflectedType, Is.EqualTo(typeof(MyClass)));
 		}
@@ -88,11 +88,11 @@ namespace NHibernate.Test.MappingByCode.TypeExtensionsTests
 		[Test]
 		public void GenericDecodeMemberAccessExpressionOfShouldReturnMemberOfRequiredClass()
 		{
-			var mi1 = TypeExtensions.DecodeMemberAccessExpressionOf<MyClass, string>(mc => mc.BaseProperty);
+			var mi1 = Mapping.ByCode.TypeExtensions.DecodeMemberAccessExpressionOf<MyClass, string>(mc => mc.BaseProperty);
 			Assert.That(mi1.DeclaringType, Is.EqualTo(typeof(MyBaseClass)));
 			Assert.That(mi1.ReflectedType, Is.EqualTo(typeof(MyClass)));
 
-			var mi2 = TypeExtensions.DecodeMemberAccessExpressionOf<MyClass, bool>(mc => mc.BaseBool);
+			var mi2 = Mapping.ByCode.TypeExtensions.DecodeMemberAccessExpressionOf<MyClass, bool>(mc => mc.BaseBool);
 			Assert.That(mi2.DeclaringType, Is.EqualTo(typeof(MyBaseClass)));
 			Assert.That(mi2.ReflectedType, Is.EqualTo(typeof(MyClass)));
 		}
@@ -126,11 +126,11 @@ namespace NHibernate.Test.MappingByCode.TypeExtensionsTests
 		[Test]
 		public void DecodeMemberAccessExpressionOfWithGenericShouldReturnMemberOfRequiredClass()
 		{
-			var mi1 = TypeExtensions.DecodeMemberAccessExpressionOf<MyEntity>(mc => mc.Id);
+			var mi1 = Mapping.ByCode.TypeExtensions.DecodeMemberAccessExpressionOf<MyEntity>(mc => mc.Id);
 			Assert.That(mi1.DeclaringType, Is.EqualTo(typeof (BaseEntity)));
 			Assert.That(mi1.ReflectedType, Is.EqualTo(typeof (MyEntity)));
 
-			var mi2 = TypeExtensions.DecodeMemberAccessExpressionOf<MyEntity>(mc => mc.BaseBool);
+			var mi2 = Mapping.ByCode.TypeExtensions.DecodeMemberAccessExpressionOf<MyEntity>(mc => mc.BaseBool);
 			Assert.That(mi2.DeclaringType, Is.EqualTo(typeof(BaseEntity)));
 			Assert.That(mi2.ReflectedType, Is.EqualTo(typeof(MyEntity)));
 		}
@@ -185,8 +185,8 @@ namespace NHibernate.Test.MappingByCode.TypeExtensionsTests
 		[Test]
 		public void WhenDecodeMemberAccessExpressionOfOnInheritedEntityInterfaceThenDecodeMember()
 		{
-			Assert.That(TypeExtensions.DecodeMemberAccessExpressionOf<IMyEntity>(m => m.Id), Is.Not.Null);
-			Assert.That(TypeExtensions.DecodeMemberAccessExpressionOf<IMyEntity, Guid>(m => m.Id), Is.Not.Null);
+			Assert.That(Mapping.ByCode.TypeExtensions.DecodeMemberAccessExpressionOf<IMyEntity>(m => m.Id), Is.Not.Null);
+			Assert.That(Mapping.ByCode.TypeExtensions.DecodeMemberAccessExpressionOf<IMyEntity, Guid>(m => m.Id), Is.Not.Null);
 		}
 
 		[Test]
