@@ -2799,6 +2799,22 @@
       <Project>{5C649B55-1B3F-4C38-9998-1B043E94A244}</Project>
       <Name>NHibernate.DomainModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NHibernate.Driver.Odbc\NHibernate.Driver.Odbc.csproj">
+      <Project>{038db367-4858-4747-b36c-6cc1e684684f}</Project>
+      <Name>NHibernate.Driver.Odbc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NHibernate.Driver.OleDb\NHibernate.Driver.OleDb.csproj">
+      <Project>{76945e59-f64e-4ea2-893b-272d7ec234bb}</Project>
+      <Name>NHibernate.Driver.OleDb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NHibernate.Driver.AdoNet\NHibernate.Driver.AdoNet.csproj">
+      <Project>{aed62c8c-4391-479e-afd5-e41dd860d23e}</Project>
+      <Name>NHibernate.Driver.AdoNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NHibernate.Driver.SqlClient\NHibernate.Driver.SqlClient.csproj">
+      <Project>{cf9feec5-3403-4f3f-9e4f-f0bafe95de39}</Project>
+      <Name>NHibernate.Driver.SqlClient</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NHibernate\NHibernate.csproj">
       <Project>{5909BFE7-93CF-4E5F-BE22-6293368AF01D}</Project>
       <Name>NHibernate</Name>

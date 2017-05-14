@@ -1,44 +1,16 @@
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Reflection;
+using System.Data.SqlServerCe;
+using NHibernate.Cfg;
 using NHibernate.SqlTypes;
 using NHibernate.Util;
-using Environment = NHibernate.Cfg.Environment;
 
 namespace NHibernate.Driver
 {
-	/// <summary>
-	/// A NHibernate driver for Microsoft SQL Server CE data provider
-	/// </summary>
-	public class SqlServerCeDriver : ReflectionBasedDriver
+	public class SqlServerCompactDriver : DriverBase
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="SqlServerCeDriver"/> class.
-		/// </summary>
-		public SqlServerCeDriver()
-			: base(
-				"System.Data.SqlServerCe",
-				"System.Data.SqlServerCe.SqlCeConnection",
-				"System.Data.SqlServerCe.SqlCeCommand")
-		{
-		}
-
 		private bool prepareSql;
-		private PropertyInfo dbParamSqlDbTypeProperty;
-
-		public override void Configure(IDictionary<string, string> settings)
-		{
-			base.Configure(settings);
-			prepareSql = PropertiesHelper.GetBoolean(Environment.PrepareSql, settings, false);
-
-			using (var cmd = CreateCommand())
-			{
-				var dbParam = cmd.CreateParameter();
-				dbParamSqlDbTypeProperty = dbParam.GetType().GetProperty("SqlDbType");
-			}
-		}
 
 		/// <summary>
 		/// MsSql requires the use of a Named Prefix in the SQL statement.  
@@ -46,10 +18,7 @@ namespace NHibernate.Driver
 		/// <remarks>
 		/// <see langword="true" /> because MsSql uses "<c>@</c>".
 		/// </remarks>
-		public override bool UseNamedPrefixInSql
-		{
-			get { return true; }
-		}
+		public override bool UseNamedPrefixInSql => true;
 
 		/// <summary>
 		/// MsSql requires the use of a Named Prefix in the Parameter.  
@@ -57,10 +26,7 @@ namespace NHibernate.Driver
 		/// <remarks>
 		/// <see langword="true" /> because MsSql uses "<c>@</c>".
 		/// </remarks>
-		public override bool UseNamedPrefixInParameter
-		{
-			get { return true; }
-		}
+		public override bool UseNamedPrefixInParameter => true;
 
 		/// <summary>
 		/// The Named Prefix for parameters.  
@@ -68,10 +34,7 @@ namespace NHibernate.Driver
 		/// <value>
 		/// Sql Server uses <c>"@"</c>.
 		/// </value>
-		public override string NamedPrefix
-		{
-			get { return "@"; }
-		}
+		public override string NamedPrefix => "@";
 
 		/// <summary>
 		/// The SqlClient driver does NOT support more than 1 open DbDataReader
@@ -83,18 +46,31 @@ namespace NHibernate.Driver
 		/// attempted to be Opened.  When Yukon comes out a new Driver will be 
 		/// created for Yukon because it is supposed to support it.
 		/// </remarks>
-		public override bool SupportsMultipleOpenReaders
+		public override bool SupportsMultipleOpenReaders => false;
+
+		public override void Configure(IDictionary<string, string> settings)
 		{
-			get { return false; }
+			base.Configure(settings);
+			prepareSql = PropertiesHelper.GetBoolean(Environment.PrepareSql, settings, false);
 		}
 
-		protected override void SetCommandTimeout(DbCommand cmd)
+		public override DbConnection CreateConnection()
 		{
+			return new System.Data.SqlServerCe.SqlCeConnection();
+		}
+
+		public override DbCommand CreateCommand()
+		{
+			return new System.Data.SqlServerCe.SqlCeCommand();
 		}
 
 		public override IResultSetsCommand GetResultSetsCommand(Engine.ISessionImplementor session)
 		{
 			return new BasicResultSetsCommand(session);
+		}
+
+		protected override void SetCommandTimeout(DbCommand cmd)
+		{
 		}
 
 		protected override void InitializeParameter(DbParameter dbParam, string name, SqlType sqlType)
@@ -104,8 +80,8 @@ namespace NHibernate.Driver
 			AdjustDbParamTypeForLargeObjects(dbParam, sqlType);
 			if (prepareSql)
 			{
-				SqlClientDriver.SetVariableLengthParameterSize(dbParam, sqlType);
-		}
+				SqlClientParameterHelper.SetVariableLengthParameterSize(dbParam, sqlType);
+			}
 		}
 
 		private static SqlType AdjustSqlType(SqlType sqlType)
@@ -129,11 +105,13 @@ namespace NHibernate.Driver
 		{
 			if (sqlType is BinaryBlobSqlType)
 			{
-				dbParamSqlDbTypeProperty.SetValue(dbParam, SqlDbType.Image, null);
+				var sqlCeParameter = (SqlCeParameter)dbParam;
+				sqlCeParameter.SqlDbType = SqlDbType.Image;
 			}
 			else if (sqlType is StringClobSqlType)
 			{
-				dbParamSqlDbTypeProperty.SetValue(dbParam, SqlDbType.NText, null);
+				var sqlCeParameter = (SqlCeParameter)dbParam;
+				sqlCeParameter.SqlDbType = SqlDbType.NText;
 			}
 		}
 	}

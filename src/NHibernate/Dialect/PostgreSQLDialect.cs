@@ -20,7 +20,7 @@ namespace NHibernate.Dialect
 	///	</listheader>
 	///	<item>
 	///		<term>connection.driver_class</term>
-	///		<description><see cref="NHibernate.Driver.NpgsqlDriver" /></description>
+	///		<description>NHibernate.Driver.NpgsqlDriver</description>
 	///	</item>
 	/// </list>
 	/// </remarks>

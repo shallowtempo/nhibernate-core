@@ -6,9 +6,7 @@ using NHibernate.Util;
 
 namespace NHibernate.AdoNet
 {
-	using SqlCommand = System.Data.SqlClient.SqlCommand;
-
-	/// <summary>
+    /// <summary>
 	/// Expose the batch functionality in ADO.Net 4.0
 	/// Microsoft in its wisdom decided to make my life hard and mark it internal.
 	/// Through the use of Reflection and some delegates magic, I opened up the functionality.
@@ -22,8 +20,8 @@ namespace NHibernate.AdoNet
 		private static readonly Action<object, SqlTransaction> transactionSetter;
 		private static readonly Action<object, int> commandTimeoutSetter;
 		private static readonly Func<object, SqlConnection> connectionGetter;
-		private static readonly Func<object, SqlCommand> batchCommandGetter;
-		private static readonly Action<object, SqlCommand> doAppend;
+		private static readonly Func<object, System.Data.SqlClient.SqlCommand> batchCommandGetter;
+		private static readonly Action<object, System.Data.SqlClient.SqlCommand> doAppend;
 		private static readonly Func<object, int> doExecuteNonQuery;
 		private static readonly Action<object> doDispose;
 
@@ -40,8 +38,8 @@ namespace NHibernate.AdoNet
 			connectionGetter = DelegateHelper.BuildPropertyGetter<SqlConnection>(sqlCmdSetType, "Connection");
 			transactionSetter = DelegateHelper.BuildPropertySetter<SqlTransaction>(sqlCmdSetType, "Transaction");
 			commandTimeoutSetter = DelegateHelper.BuildPropertySetter<int>(sqlCmdSetType, "CommandTimeout");
-			batchCommandGetter = DelegateHelper.BuildPropertyGetter<SqlCommand>(sqlCmdSetType, "BatchCommand");
-			doAppend = DelegateHelper.BuildAction<SqlCommand>(sqlCmdSetType, "Append");
+			batchCommandGetter = DelegateHelper.BuildPropertyGetter<System.Data.SqlClient.SqlCommand>(sqlCmdSetType, "BatchCommand");
+			doAppend = DelegateHelper.BuildAction<System.Data.SqlClient.SqlCommand>(sqlCmdSetType, "Append");
 			doExecuteNonQuery = DelegateHelper.BuildFunc<int>(sqlCmdSetType, "ExecuteNonQuery");
 			doDispose = DelegateHelper.BuildAction(sqlCmdSetType, "Dispose");
 		}
@@ -55,7 +53,7 @@ namespace NHibernate.AdoNet
 		/// Append a command to the batch
 		/// </summary>
 		/// <param name="command"></param>
-		public void Append(SqlCommand command)
+		public void Append(System.Data.SqlClient.SqlCommand command)
 		{
 			AssertHasParameters(command);
 			doAppend(instance, command);
@@ -67,7 +65,7 @@ namespace NHibernate.AdoNet
 		/// the command has no parameters.
 		/// </summary>
 		/// <param name="command"></param>
-		private static void AssertHasParameters(SqlCommand command)
+		private static void AssertHasParameters(System.Data.SqlClient.SqlCommand command)
 		{
 			if (command.Parameters.Count == 0)
 			{
@@ -79,7 +77,7 @@ namespace NHibernate.AdoNet
 		/// <summary>
 		/// Return the batch command to be executed
 		/// </summary>
-		public SqlCommand BatchCommand
+		public System.Data.SqlClient.SqlCommand BatchCommand
 		{
 			get { return batchCommandGetter(instance); }
 		}

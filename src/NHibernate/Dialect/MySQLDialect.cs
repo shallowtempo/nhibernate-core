@@ -24,7 +24,7 @@ namespace NHibernate.Dialect
 	///		</listheader>
 	///		<item>
 	///			<term>connection.driver_class</term>
-	///			<description><see cref="NHibernate.Driver.MySqlDataDriver" /></description>
+	///			<description>NHibernate.Driver.MySqlDataDriver</description>
 	///		</item>
 	/// </list>
 	/// </remarks>
