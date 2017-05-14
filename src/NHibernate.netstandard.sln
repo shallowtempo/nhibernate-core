@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NHibernate.Driver.SqlServer
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Drivers", "Drivers", "{C1E32807-455E-4348-ACF0-AE981A718584}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NHibernate.DomainModel", "NHibernate.DomainModel\NHibernate.DomainModel.csproj", "{A0F5C952-D4F9-4A3F-814C-0E77E648FF0F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{022A4A37-DE2B-439A-9490-1EA977BB3123}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{022A4A37-DE2B-439A-9490-1EA977BB3123}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{022A4A37-DE2B-439A-9490-1EA977BB3123}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0F5C952-D4F9-4A3F-814C-0E77E648FF0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0F5C952-D4F9-4A3F-814C-0E77E648FF0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0F5C952-D4F9-4A3F-814C-0E77E648FF0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0F5C952-D4F9-4A3F-814C-0E77E648FF0F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
