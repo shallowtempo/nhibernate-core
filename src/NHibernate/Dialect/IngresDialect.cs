@@ -49,7 +49,7 @@ namespace NHibernate.Dialect
 			//RegisterColumnType(DbType.String, 1073741823, "text"); //
 			//RegisterColumnType(DbType.Time, "time");
 
-			DefaultProperties[Environment.ConnectionDriver] = "NHibernate.Driver.IngresDriver";
+			DefaultProperties[Environment.ConnectionDriver] = "NHibernate.Driver.IngresDriver, NHibernate.Driver.AdoNet";
 		}
 
 		#region Overridden informational metadata

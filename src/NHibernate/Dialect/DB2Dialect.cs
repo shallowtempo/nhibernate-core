@@ -127,7 +127,7 @@ namespace NHibernate.Dialect
 			// DB2 does not support ANSI substring syntax.
 			RegisterFunction("substring", new SQLFunctionTemplate(NHibernateUtil.String, "substring(?1, ?2, ?3)"));
 
-			DefaultProperties[Environment.ConnectionDriver] = "NHibernate.Driver.DB2Driver";
+			DefaultProperties[Environment.ConnectionDriver] = "NHibernate.Driver.DB2Driver, NHibernate.Driver.AdoNet";
 		}
 
 		/// <summary></summary>

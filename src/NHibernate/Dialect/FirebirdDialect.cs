@@ -41,7 +41,7 @@ namespace NHibernate.Dialect
 			RegisterKeywords();
 			RegisterColumnTypes();
 			RegisterFunctions();
-			DefaultProperties[Environment.ConnectionDriver] = "NHibernate.Driver.FirebirdClientDriver";
+			DefaultProperties[Environment.ConnectionDriver] = "NHibernate.Driver.FirebirdClientDriver, NHibernate.Driver.FirebirdClient";
 		}
 
 		public override string AddColumnString

@@ -111,7 +111,7 @@ namespace NHibernate.Dialect
 			//functions:
 			RegisterFunctions();
 
-			DefaultProperties[Environment.ConnectionDriver] = "NHibernate.Driver.MySqlDataDriver";
+			DefaultProperties[Environment.ConnectionDriver] = "NHibernate.Driver.MySqlDataDriver, NHibernate.Driver.MySql";
 		}
 
 		protected virtual void RegisterFunctions()

@@ -29,7 +29,7 @@ namespace NHibernate.Dialect
 	{
 		public SybaseASE15Dialect()
 		{
-			DefaultProperties[Environment.ConnectionDriver] = "NHibernate.Driver.SybaseAseClientDriver";
+			DefaultProperties[Environment.ConnectionDriver] = "NHibernate.Driver.SybaseAseClientDriver, NHibernate.Driver.AdoNet";
 			
 			RegisterColumnType(DbType.Boolean, "tinyint"); // Sybase BIT type does not support null values
 			RegisterColumnType(DbType.Int16, "smallint");

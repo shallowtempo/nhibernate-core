@@ -23,7 +23,7 @@ namespace NHibernate.Dialect
 	{
 		public DB2400Dialect()
 		{
-			DefaultProperties[Environment.ConnectionDriver] = "NHibernate.Driver.DB2400Driver";
+			DefaultProperties[Environment.ConnectionDriver] = "NHibernate.Driver.DB2400Driver, NHibernate.Driver.AdoNet";
 		}
 
 		public override bool SupportsSequences

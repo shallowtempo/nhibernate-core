@@ -56,7 +56,7 @@ namespace NHibernate.Dialect
 		public SybaseSQLAnywhere12Dialect()
 			: base()
 		{
-			DefaultProperties[Environment.ConnectionDriver] = "NHibernate.Driver.SybaseSQLAnywhereDotNet4Driver";
+			DefaultProperties[Environment.ConnectionDriver] = "NHibernate.Driver.SybaseSQLAnywhereDotNet4Driver, NHibernate.Driver.AdoNet";
 			RegisterDateTimeTypeMappings();
 			RegisterKeywords();
 		}

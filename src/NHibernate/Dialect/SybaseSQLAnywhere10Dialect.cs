@@ -50,7 +50,7 @@ namespace NHibernate.Dialect
 	{
 		public SybaseSQLAnywhere10Dialect()
 		{
-			DefaultProperties[Environment.ConnectionDriver] = "NHibernate.Driver.SybaseSQLAnywhereDriver";
+			DefaultProperties[Environment.ConnectionDriver] = "NHibernate.Driver.SybaseSQLAnywhereDriver, NHibernate.Driver.AdoNet";
 			DefaultProperties[Environment.PrepareSql] = "false";
 
 			RegisterCharacterTypeMappings();
