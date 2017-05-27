@@ -1,3 +1,4 @@
+#if !NETSTANDARD2_0
 using System;
 using System.Collections;
 using System.Transactions;
@@ -182,3 +183,4 @@ namespace NHibernate.Transaction
 		}
 	}
 }
+#endif

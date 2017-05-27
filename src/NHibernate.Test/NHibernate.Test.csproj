@@ -17,6 +17,7 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
     <Compile Remove="DriverTest\**" />
+    <Compile Remove="NHSpecificTest\NH1054\**" />
     <Compile Remove="NHSpecificTest\NH2188\**" />
     <Compile Remove="NHSpecificTest\NH2484\**" />
     <Compile Remove="NHSpecificTest\NH2985\**" />
