@@ -94,11 +94,13 @@ namespace NHibernate.Dialect.Schema
 		public virtual ISet<string> GetReservedWords()
 		{
 			var result = new HashSet<string>();
+#if !NETSTANDARD2_0
 			DataTable dtReservedWords = connection.GetSchema(DbMetaDataCollectionNames.ReservedWords);
 			foreach (DataRow row in dtReservedWords.Rows)
 			{
 				result.Add(row["ReservedWord"].ToString());
 			}
+#endif
 			return result;
 		}
 
