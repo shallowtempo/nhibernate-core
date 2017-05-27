@@ -1,7 +1,7 @@
 using System;
 using System.Data.Common;
 using System.Diagnostics;
-using System.Reflection;
+using MySql.Data.MySqlClient;
 using NHibernate.Util;
 
 namespace NHibernate.AdoNet
@@ -9,33 +9,29 @@ namespace NHibernate.AdoNet
 	public class MySqlClientSqlCommandSet : IDisposable
 	{
 		private static readonly System.Type adapterType;
-		private static readonly Action<object> doInitialise;
-		private static readonly Action<object, int> batchSizeSetter;
-		private static readonly Action<object, DbCommand> doAppend;
-		private static readonly Func<object, int> doExecuteNonQuery;
-		private static readonly Action<object> doDispose;
+		private static readonly Action<MySqlDataAdapter> doInitialise;
+		private static readonly Action<MySqlDataAdapter, DbCommand> doAppend;
+		private static readonly Func<MySqlDataAdapter, int> doExecuteNonQuery;
 
-		private readonly object instance;
+		private readonly MySqlDataAdapter instance;
 		private int countOfCommands;
 
 		static MySqlClientSqlCommandSet()
 		{
-			var sysData = Assembly.Load("MySql.Data");
-			adapterType = sysData.GetType("MySql.Data.MySqlClient.MySqlDataAdapter");
+			adapterType = typeof(MySqlDataAdapter);
 			Debug.Assert(adapterType != null, "Could not find MySqlDataAdapter!");
 
 			doInitialise = DelegateHelper.BuildAction(adapterType, "InitializeBatching");
-			batchSizeSetter = DelegateHelper.BuildPropertySetter<int>(adapterType, "UpdateBatchSize");
 			doAppend = DelegateHelper.BuildAction<DbCommand>(adapterType, "AddToBatch");
 			doExecuteNonQuery = DelegateHelper.BuildFunc<int>(adapterType, "ExecuteBatch");
-			doDispose = DelegateHelper.BuildAction(adapterType, "Dispose");
 		}
 
 		public MySqlClientSqlCommandSet(int batchSize)
 		{
-			instance = Activator.CreateInstance(adapterType, true);
+			instance = new MySqlDataAdapter();
+			instance = (MySqlDataAdapter) Activator.CreateInstance(adapterType, true);
 			doInitialise(instance);
-			batchSizeSetter(instance, batchSize);
+			instance.UpdateBatchSize = batchSize;
 		}
 
 		public void Append(DbCommand command)
@@ -46,7 +42,7 @@ namespace NHibernate.AdoNet
 
 		public void Dispose()
 		{
-			doDispose(instance);
+			instance.Dispose();
 		}
 
 		public int ExecuteNonQuery()

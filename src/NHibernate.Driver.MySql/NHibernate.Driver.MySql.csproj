@@ -50,6 +50,9 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AdoNet\MySqlClientBatchingBatcher.cs" />
+    <Compile Include="AdoNet\MySqlClientBatchingBatcherFactory.cs" />
+    <Compile Include="AdoNet\MySqlClientSqlCommandSet.cs" />
     <Compile Include="Cfg\Loquacious\ConnectionConfigurationExtensionMySql.cs" />
     <Compile Include="Driver\MySqlDataDriver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
