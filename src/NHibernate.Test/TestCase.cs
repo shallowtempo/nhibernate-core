@@ -68,7 +68,7 @@ namespace NHibernate.Test
 		static TestCase()
 		{
 			// Configure log4net here since configuration through an attribute doesn't always work.
-			XmlConfigurator.Configure();
+			XmlConfigurator.Configure(LogManager.GetRepository(typeof(TestCase).Assembly));
 		}
 
 		/// <summary>
