@@ -3,7 +3,11 @@
     <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(MSBuildProjectExtension)' == '.vbproj'">
+    <Compile Include="..\SharedAssemblyInfo.vb" Link="SharedAssemblyInfo.vb" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(MSBuildProjectExtension)' == '.csproj'">
     <Compile Include="..\SharedAssemblyInfo.cs" Link="SharedAssemblyInfo.cs" />
   </ItemGroup>
 
