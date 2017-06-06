@@ -282,7 +282,7 @@ namespace NHibernate.Dialect
 			RegisterColumnType(DbType.AnsiString, 2147483647, "BLOB SUB_TYPE 1"); // should use the IType.ClobType
 			RegisterColumnType(DbType.Binary, "BLOB SUB_TYPE 0");
 			RegisterColumnType(DbType.Binary, 2147483647, "BLOB SUB_TYPE 0"); // should use the IType.BlobType
-			RegisterColumnType(DbType.Boolean, "SMALLINT");
+			RegisterColumnType(DbType.Boolean, "BOOLEAN");
 			RegisterColumnType(DbType.Byte, "SMALLINT");
 			RegisterColumnType(DbType.Currency, "DECIMAL(18, 4)");
 			RegisterColumnType(DbType.Date, "DATE");

@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.Common;
 using NHibernate.Driver;
 using NHibernate.SqlCommand;
@@ -178,7 +179,7 @@ namespace NHibernate.Test.DriverTest
 				using (var cmd = conn.CreateCommand())
 				{
 					cmd.CommandText = "select count(*) from mon$attachments where mon$attachment_id <> current_connection";
-					return (int)cmd.ExecuteScalar();
+					return Convert.ToInt32(cmd.ExecuteScalar());
 				}
 			}
 		}

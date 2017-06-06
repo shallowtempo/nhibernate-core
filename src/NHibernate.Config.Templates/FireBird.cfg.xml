@@ -19,8 +19,9 @@ for your own use before compile tests in VisualStudio.
 		<property name="connection.driver_class">NHibernate.Driver.FirebirdClientDriver</property>
 		<property name="connection.connection_string">
 			Server=localhost;
-			Database=C:\nhibernate.fdb;
-			User=SYSDBA;Password=masterkey
+			Database=%temp%\nhibernate.fdb;ServerType=1;Dialect=3;
+			User=SYSDBA;Password=masterkey;
+			MaxPoolSize=200;ClientLibrary=fbclient.dll;
 		</property>
 		<property name="show_sql">false</property>
 		<property name="dialect">NHibernate.Dialect.FirebirdDialect</property>
